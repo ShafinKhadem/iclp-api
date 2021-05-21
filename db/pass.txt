@@ -1,0 +1,8 @@
+Password validator is used. Backend only accepts strong passwords.
+Voldemort's password is prefix of other passwords.
+
+
+voldemort:  kjdhfH:O*&^%87ww5k               
+shafin:     kjdhfH:O*&^%87ww5ksupahotfaya
+sabit:      kjdhfH:O*&^%87ww5kladybug
+shukti:     kjdhfH:O*&^%87ww5kpink
