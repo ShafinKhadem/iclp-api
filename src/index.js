@@ -9,11 +9,19 @@ const loginRouter = require("./routes/loginRouter");
 const signUpRouter = require("./routes/signUpRouter");
 const logoutRouter = require("./routes/logoutRouter");
 const protectedRouter = require("./routes/protectedRouter");
+var cors = require("cors");
 
 const PORT = process.env.API_PORT || 5000;
 
 const app = express();
 
+const corsOptions = {
+    origin: "http://localhost:8080",
+    credentials: true,
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(express.json());
 
