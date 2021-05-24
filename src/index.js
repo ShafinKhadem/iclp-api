@@ -9,6 +9,7 @@ const loginRouter = require("./routes/loginRouter");
 const signUpRouter = require("./routes/signUpRouter");
 const logoutRouter = require("./routes/logoutRouter");
 const protectedRouter = require("./routes/protectedRouter");
+const publicRouter = require("./routes/publicRouter");
 var cors = require("cors");
 
 const PORT = process.env.API_PORT || 5000;
@@ -51,6 +52,7 @@ app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/logout", logoutRouter);
 app.use("/protected", protectedRouter);
+app.use("/public", publicRouter);
 app.all("*", (req, res, next) => {
     err = new Error("Not supported yet");
     err.statusCode = 400;

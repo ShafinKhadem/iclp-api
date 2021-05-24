@@ -8,7 +8,7 @@
 -   Now you can run `psql` and enter into PostgreSQL command line.
 -   In PostgreSQL command line, create a dedicated database for ICLP.
 -   Run `CREATE DATABASE iclp_db;`(don't miss the semicolon).
--   It will create a database named "iclp_db". It's better to stick with this name. Otherwise, you will need to change environment variables in [.env](https://github.com/mwashief/iclp-api/blob/main/.env) file.
+-   It will create a database named "iclp_db". It's better to stick with this name. Otherwise, you will need to change environment variables in [.env](/../../.env) file.
 -   After creating the database quit from PostgreSQL command line by giving `\q` command.
 -   Now locate the dump file. Suppose, the dump file's absolute path is "infile.sql"
 -   Run `psql iclp_db < infile.sql`. (Details are [here](https://www.postgresql.org/docs/9.1/backup-dump.html))
