@@ -6,3 +6,4 @@ It may need to change something in database. If you change anything, please writ
 2. Added a new table named session_store. It saves user sessions.
 3. Added a new column 'salt' in 'users' table.
 4. Password column was renamed to hash.
+5. Removed all tables irrelevant to our part.
