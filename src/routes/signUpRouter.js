@@ -2,9 +2,11 @@ const express = require("express");
 const pool = require("../config/pool");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-const signUpRouter = express.Router();
+const { validate } = require("../util");
 
+const signUpRouter = express.Router();
 signUpRouter.use(express.json());
+
 
 signUpRouter.route("/").post(
     body("name")
@@ -33,30 +35,26 @@ signUpRouter.route("/").post(
         return true;
     }),
     async (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
+        validate("signup failed");
+
+        try {
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(
+                req.body.password,
+                salt
+            );
+            await pool.query(
+                "INSERT INTO users(name, hash, email, salt) VALUES ($1, $2, $3, $4)",
+                [req.body.name, hashedPassword, req.body.email, salt]
+            );
+            res.statusCode = 201;
+            res.json({ msg: "Signup successful" });
+        } catch (e) {
+            // log the actual error message only in server side.
+            console.log(e.message);
             const err = new Error("signup failed");
-            err.reasons = errors.errors.map((e) => e.msg);
-            err.statusCode = 400;
+            err.reasons = ["server error"];
             next(err);
-        } else {
-            try {
-                const salt = await bcrypt.genSalt();
-                const hashedPassword = await bcrypt.hash(
-                    req.body.password,
-                    salt
-                );
-                pool.query(
-                    "INSERT INTO users(name, hash, email, salt) VALUES ($1, $2, $3, $4)",
-                    [req.body.name, hashedPassword, req.body.email, salt]
-                );
-                res.statusCode = 201;
-                res.json({ msg: "Signup successful" });
-            } catch (error) {
-                error.msg = "signup failed";
-                err.reasons = ["server error"];
-                next();
-            }
         }
     }
 );

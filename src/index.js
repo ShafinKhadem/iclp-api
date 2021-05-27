@@ -44,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-    console.log(req.body);
+    console.log({ method: req.method, params: req.params, body: req.body });
     next();
 });
 
@@ -59,6 +59,9 @@ app.all("*", (req, res, next) => {
     next(err);
 });
 app.use((err, req, res, next) => {
+    if (err) {
+        console.error(err.stack);
+    }
     res.statusCode = err.statusCode || 500;
     res.json({
         error: {

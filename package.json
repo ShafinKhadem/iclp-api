@@ -21,7 +21,8 @@
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
     "eslint": "^7.26.0",
