@@ -49,7 +49,7 @@
 - [node-postgres](https://node-postgres.com/)
 - [express-validator](https://express-validator.github.io/docs/index.html)
 - [sql-template-strings](https://www.npmjs.com/package/sql-template-strings)
-
+- [passport-local](https://www.passportjs.org/packages/passport-local/)
 
 ### Install new npm package
 
