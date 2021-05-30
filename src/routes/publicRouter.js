@@ -13,9 +13,52 @@ publicRouter.route("/").get((req, res, next) => {
 
 publicRouter.route("/problem-topics").get(
     (req, res, next) => {
-        validate(req, next, "invalid request");
         jsonDBQuery(res, next, SQL`select * from topics`);
     }
 );
+
+publicRouter.route("/problems/:topicid").get(
+    (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            select *
+            from challenges c
+            where c.id in
+                  (
+                      select challenge_id
+                      from challenge_topics ct
+                      where topic_id = ${req.params.topicid}
+                  ) and c.type = 'coding';
+            `);
+    }
+)
+
+publicRouter.route("/solo/:topicid").get(
+    (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            select *
+            from challenges c
+            where c.id in
+                  (
+                      select challenge_id
+                      from challenge_topics ct
+                      where topic_id = ${req.params.topicid}
+                  ) and c.type = 'mcq';
+            `);
+    }
+)
+
+publicRouter.route("/submissions/:problemid").get(
+    (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            select *
+            from challenge_results
+            where challenge_id = ${req.params.problemid};
+            `);
+    }
+)
+
 
 module.exports = publicRouter;
