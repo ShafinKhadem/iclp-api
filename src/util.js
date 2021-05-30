@@ -11,17 +11,26 @@ function validate(req, next, errorMessage) {
     }
 }
 
-async function jsonDBQuery(res, next, sqlTemplateString) {
+async function dbQuery(sqlTemplateString) {
     try {
         const result = await pool.query(sqlTemplateString);
-        res.status(200).json(result.rows);
+        return result.rows;
     } catch (e) {
         // log the actual error message only in server side.
         console.log(e.message);
         const err = new Error("operation failed");
         err.reasons = ["database error"];
-        next(err);
+        return err;
     }
 }
 
-module.exports = { validate, jsonDBQuery };
+async function jsonDBQuery(res, next, sqlTemplateString) {
+    const result = await dbQuery(sqlTemplateString);
+    if (result instanceof Error) {
+        next(result);
+    } else {
+        res.status(200).json(result);
+    }
+}
+
+module.exports = { validate, dbQuery, jsonDBQuery };

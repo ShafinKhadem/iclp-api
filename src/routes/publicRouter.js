@@ -1,7 +1,7 @@
 const express = require("express");
 const { body } = require("express-validator");
 const SQL = require("sql-template-strings");
-const { validate, jsonDBQuery } = require("../util");
+const { validate, dbQuery, jsonDBQuery } = require("../util");
 
 const publicRouter = express.Router({ mergeParams: true });
 publicRouter.use(express.json());
