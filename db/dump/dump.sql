@@ -16,6 +16,31 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: challenge_type; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.challenge_type AS ENUM (
+    'mcq',
+    'code'
+);
+
+
+ALTER TYPE public.challenge_type OWNER TO postgres;
+
+--
+-- Name: difficulty_type; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.difficulty_type AS ENUM (
+    'easy',
+    'medium',
+    'hard'
+);
+
+
+ALTER TYPE public.difficulty_type OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -29,7 +54,9 @@ CREATE TABLE public.challenge_results (
     challenge_id integer,
     user_id integer,
     "time" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    mark integer
+    score integer,
+    opponent_id integer,
+    details character varying(255)
 );
 
 
@@ -91,7 +118,9 @@ CREATE TABLE public.challenges (
     id integer NOT NULL,
     title character varying(255),
     content character varying(65535),
-    type character varying(255)
+    category public.challenge_type,
+    difficulty public.difficulty_type,
+    score integer
 );
 
 
@@ -239,7 +268,9 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: challenge_results; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.challenge_results (id, challenge_id, user_id, "time", mark) FROM stdin;
+COPY public.challenge_results (id, challenge_id, user_id, "time", score, opponent_id, details) FROM stdin;
+2	1	1	2021-05-31 00:01:12.773866	5	\N	\N
+1	1	1	2021-05-30 22:57:16.354623	10	\N	TLE/MLE/lost to opponent etc.?
 \.
 
 
@@ -256,6 +287,9 @@ COPY public.challenge_reviews (user_id, challenge_id, rating, review) FROM stdin
 --
 
 COPY public.challenge_topics (challenge_id, topic_id) FROM stdin;
+1	1
+2	1
+3	2
 \.
 
 
@@ -263,7 +297,11 @@ COPY public.challenge_topics (challenge_id, topic_id) FROM stdin;
 -- Data for Name: challenges; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.challenges (id, title, content, type) FROM stdin;
+COPY public.challenges (id, title, content, category, difficulty, score) FROM stdin;
+1	Loops	problem statement and sample tests	code	hard	20
+2	MCQ_loops	problem with solutions maybe?	mcq	hard	15
+4	conditionals	whatever	code	easy	5
+3	Arrays	whatever	code	medium	10
 \.
 
 
@@ -272,6 +310,15 @@ COPY public.challenges (id, title, content, type) FROM stdin;
 --
 
 COPY public.session_store (sid, sess, expire) FROM stdin;
+ZKkWQPqy3R5L-y4Hfzk38qOswPl8k7qz	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-01T15:41:31.148Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-01 21:41:32
+QtdXhr6w-Bqyit34yug8gI93rkbmgbQe	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:53:21.983Z","httpOnly":true,"path":"/"}}	2021-07-01 21:53:22
+0lKY9E_AavggUf6ODfyxqn-7p1Au_lp2	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:54:49.428Z","httpOnly":true,"path":"/"}}	2021-07-01 21:54:50
+M-to2p3PheU1CEnszDBCAjXkjrGmqcmS	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:59:44.422Z","httpOnly":true,"path":"/"}}	2021-07-01 21:59:45
+BASaKJptAgVQcOkz-YMzlqalxNXjbtDl	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:02:04.042Z","httpOnly":true,"path":"/"}}	2021-07-01 22:02:05
+DPuh2Xzbp6hh1pEdOt2MLIYF5rv09l_o	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:13:42.831Z","httpOnly":true,"path":"/"}}	2021-07-01 22:13:43
+iOTloxpN9sXA3-lx0ZTdDsnGycPU-n4_	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:13:46.904Z","httpOnly":true,"path":"/"}}	2021-07-01 22:13:47
+NQQj_goWO8zIHv1XPyYiMyR0omu1e9Uk	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:14:21.588Z","httpOnly":true,"path":"/"}}	2021-07-01 22:14:22
+umki_wV1mtWVdagd5iDZlPgH0cOh0sSL	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:17:13.619Z","httpOnly":true,"path":"/"}}	2021-07-01 22:17:14
 \.
 
 
@@ -280,6 +327,9 @@ COPY public.session_store (sid, sess, expire) FROM stdin;
 --
 
 COPY public.topics (id, name, description) FROM stdin;
+1	c++	c is the mother of all programming languages, c++ is object oriented extension of C.
+2	python	A very easy yet powerful language, its sysntax is the most beginner-friendly.
+3	java	A very powerful OOP language. The trick in java is, there are no tricks. It forces the code to be lengthy and structured.
 \.
 
 
@@ -299,21 +349,21 @@ COPY public.users (id, email, hash, name, affiliation, ranking, is_premium, salt
 -- Name: challenge_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenge_results_id_seq', 1, false);
+SELECT pg_catalog.setval('public.challenge_results_id_seq', 2, true);
 
 
 --
 -- Name: challenges_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenges_id_seq', 1, false);
+SELECT pg_catalog.setval('public.challenges_id_seq', 4, true);
 
 
 --
 -- Name: topics_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.topics_id_seq', 1, false);
+SELECT pg_catalog.setval('public.topics_id_seq', 3, true);
 
 
 --
@@ -399,6 +449,14 @@ CREATE UNIQUE INDEX users_email_uindex ON public.users USING btree (email);
 
 ALTER TABLE ONLY public.challenge_results
     ADD CONSTRAINT challenge_results_challenges_challenge_id_fk FOREIGN KEY (challenge_id) REFERENCES public.challenges(id);
+
+
+--
+-- Name: challenge_results challenge_results_users_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.challenge_results
+    ADD CONSTRAINT challenge_results_users_id_fk FOREIGN KEY (opponent_id) REFERENCES public.users(id);
 
 
 --
