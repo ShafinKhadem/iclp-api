@@ -1,9 +1,11 @@
 // use this middleware in protected routes
 module.exports = function isAuth(req, res, next) {
-    console.log("here1");
+    console.log("checking authentication...");
     if (req.isAuthenticated()) {
+        console.log('authenticated');
         next();
     } else {
-        res.status(401).json({ message: "You are not authenticated." });
+        console.error("not authenticated");
+        res.status(401).json({ message: "not authenticated" });
     }
 };

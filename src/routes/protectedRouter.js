@@ -1,8 +1,19 @@
 const express = require("express");
+const isAuth = require("../middlewares/auth");
+const appRoot = require('app-root-path');
 const { body } = require("express-validator");
 const SQL = require("sql-template-strings");
 const { validate, dbQuery, jsonDBQuery } = require("../util");
-const isAuth = require("../middlewares/auth");
+const { spawn } = require("child_process");
+const fs = require('fs');
+const fsPromises = require('fs/promises');
+const tmpDir = appRoot + '/tmp';
+if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir);
+}
+const multer = require('multer');
+const upload = multer({ dest: appRoot + '/uploads' });
+
 
 const protectedRouter = express.Router({ mergeParams: true });
 protectedRouter.use(express.json());
@@ -12,22 +23,86 @@ protectedRouter.route("/").get(isAuth, (req, res, next) => {
     res.status(200).json({ message: "into protected", user: req.user });
 });
 
+
+async function spawnChild(command, args, outputFilePath = tmpDir + '/out.log', inputFilePath) {
+    const out = fs.openSync(outputFilePath, 'w');
+    const child = spawn(command, args, {
+        stdio: [inputFilePath ? fs.openSync(inputFilePath, 'r') : 'ignore', out, 'pipe']
+    });
+
+    let err = '';
+    child.stderr.on('data', data => {
+        err += data;
+    });
+
+    child.on('error', error => {
+        console.error(`error: ${error.message}`);
+    });
+
+    const exitCode = await new Promise((resolve, reject) => {
+        child.on('close', resolve);
+    });
+    return { exitCode, err };
+};
+
+async function isCorrect(problemid, file) {
+    const executable = `${tmpDir}/${file.filename}_exec`;
+    const { exitCode, err } = await spawnChild("g++", ['-x', 'c++', file.path, '-o', `${executable}`]);
+    if (exitCode) {
+        console.error(err);
+        return false;
+    } else {
+        const problemDir = `${appRoot}/uploads/${problemid}`;
+        const testDir = problemDir + '/tests';
+        const files = await fsPromises.readdir(testDir);
+        for (const file of files) {
+            const out = `${tmpDir}/${file.filename}_${file}.out`, inp = `${testDir}/${file}`;
+            await spawnChild(`${executable}`, [], out, inp);
+            const { exitCode, err } = await spawnChild(problemDir + '/checker', [inp, out]);
+            console.log(`test: ${file}, exitcode: ${exitCode}`);
+            if (exitCode !== 0) {
+                console.error(err);
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+
 protectedRouter.route("/submit").post(
+    // NOTE: multer.single('f') discards all fields after f
+    upload.single('submission'),
+    isAuth,
     async (req, res, next) => {
-        console.log(`submission received ${req.body.submission}`);
-        mark = 5;
-        const result = await dbQuery(
+        const { params, query, body, user, file } = req;
+        console.log(`submission received ${file.path}`);
+        let result = await dbQuery(
             SQL`
-            insert into challenge_results(challenge_id, user_id, mark)
-            values (${req.body.challenge_id}, ${req.user.id}, ${mark});
+            select score
+            from challenges
+            where id = ${body.problemid};
             `
         );
         if (result instanceof Error) {
             next(result);
-        } else {
-            res.status(200).json({ mark: mark });
         }
+        const maxScore = result[0].score;
+        const correct = await isCorrect(body.problemid, file);
+        const score = correct ? maxScore : 0;
+        const details = 'fuck details';
+        result = await dbQuery(
+            SQL`
+            insert into challenge_results(challenge_id, user_id, score, details)
+            values (${body.problemid}, ${user.id}, ${score}, ${details});
+            `
+        );
+        if (result instanceof Error) {
+            next(result);
+        }
+        console.log(score);
+        res.status(200).json({ score });
     }
-)
+);
 
 module.exports = protectedRouter;

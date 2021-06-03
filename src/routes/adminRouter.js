@@ -17,15 +17,15 @@ const problemUpload = multer({
             console.log(body);
             const result = await dbQuery(
                 SQL`
-            INSERT INTO public.challenges (id, title, content, category, difficulty, score)
-            VALUES (DEFAULT, ${body.title}, ${body.statement}, 'code', ${body.difficulty}, ${body.score})
-            returning id;
-            `
+                INSERT INTO public.challenges (id, title, content, category, difficulty, score)
+                VALUES (DEFAULT, ${body.title}, ${body.statement}, 'code', ${body.difficulty}, ${body.score})
+                returning id;
+                `
             );
             if (result instanceof Error) {
 
             } else {
-                const dir = appRoot + '/uploads/' + result[0].id;
+                const dir = `${appRoot}/uploads/${result[0].id}`;
                 body.problemid = result[0].id;
                 console.log(dir);
                 fs.mkdirSync(dir, { recursive: true });

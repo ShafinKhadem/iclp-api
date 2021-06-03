@@ -21,29 +21,28 @@
             "${TM_FILENAME_BASE}.route(\"$1\").${2:post}(",
             "    $3",
             "    async (req, res, next) => {",
-            "        const {params, query, body} = req;",
+            "        const {params, query, body, user, file} = req;",
             "        $4",
             "        jsonDBQuery(res, next,",
             "            SQL`",
             "            $5",
             "            `);",
             "    }",
-            ")"
+            ");"
         ]
     },
     "db query": {
-        "prefix": "query",
+        "prefix": "dbq",
         "body": [
-            "const result = await dbQuery(",
+            "let ${2:result} = await dbQuery(",
             "    SQL`",
             "    $1",
             "    `",
             ");",
-            "if (result instanceof Error) {",
-            "    next(result);",
-            "} else {",
-            "    res.status(200).json(${2:result});",
-            "}"
+            "if ($2 instanceof Error) {",
+            "    next($2);",
+            "}",
+            "$3",
         ]
     }
 }
