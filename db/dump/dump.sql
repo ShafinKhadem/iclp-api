@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.2 (Ubuntu 13.2-1)
--- Dumped by pg_dump version 13.2 (Ubuntu 13.2-1)
+-- Dumped from database version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
+-- Dumped by pg_dump version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -40,6 +40,18 @@ CREATE TYPE public.difficulty_type AS ENUM (
 
 
 ALTER TYPE public.difficulty_type OWNER TO postgres;
+
+--
+-- Name: language; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.language AS ENUM (
+    'c++ 17',
+    'python3'
+);
+
+
+ALTER TYPE public.language OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -290,6 +302,7 @@ COPY public.challenge_topics (challenge_id, topic_id) FROM stdin;
 1	1
 2	1
 3	2
+4	2
 \.
 
 

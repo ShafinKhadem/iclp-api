@@ -46,10 +46,12 @@
 
 ### Read documentations
 
-- [node-postgres](https://node-postgres.com/)
 - [express-validator](https://express-validator.github.io/docs/index.html)
-- [sql-template-strings](https://www.npmjs.com/package/sql-template-strings)
 - [passport-local](https://www.passportjs.org/packages/passport-local/)
+- [node-postgres](https://node-postgres.com/)
+- [sql-template-strings](https://www.npmjs.com/package/sql-template-strings)
+- [app-root-path](https://www.npmjs.com/package/app-root-path)
+- [multer](https://www.npmjs.com/package/multer) for file upload
 
 ### Install new npm package
 

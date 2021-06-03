@@ -18,11 +18,14 @@
     "json db route": {
         "prefix": "route",
         "body": [
-            "${TM_FILENAME_BASE}.route(\"$1\").${2:get}(",
+            "${TM_FILENAME_BASE}.route(\"$1\").${2:post}(",
+            "    $3",
             "    async (req, res, next) => {",
+            "        const {params, query, body} = req;",
+            "        $4",
             "        jsonDBQuery(res, next,",
             "            SQL`",
-            "            $3",
+            "            $5",
             "            `);",
             "    }",
             ")"

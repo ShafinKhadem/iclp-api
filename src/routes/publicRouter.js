@@ -17,18 +17,34 @@ publicRouter.route("/problem-topics").get(
     }
 );
 
-publicRouter.route("/problems/:topicid").get(
+publicRouter.route("/problems/:topic").get(
     (req, res, next) => {
         jsonDBQuery(res, next,
             SQL`
             select *
-            from challenges c
-            where c.id in
+            from challenges
+            where id in
                   (
                       select challenge_id
-                      from challenge_topics ct
-                      where topic_id = ${req.params.topicid}
-                  ) and c.type = 'coding';
+                      from challenge_topics
+                      where topic_id in
+                            (
+                                select id
+                                from topics
+                                where name = ${req.params.topic}
+                            )
+                  )
+              and category = 'code';
+            `);
+    }
+)
+
+publicRouter.route("/challenge/:id").get(
+    async (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            select *
+            from challenges where id = ${req.params.id};
             `);
     }
 )
@@ -38,13 +54,13 @@ publicRouter.route("/solo/:topicid").get(
         jsonDBQuery(res, next,
             SQL`
             select *
-            from challenges c
-            where c.id in
+            from challenges
+            where id in
                   (
                       select challenge_id
-                      from challenge_topics ct
+                      from challenge_topics
                       where topic_id = ${req.params.topicid}
-                  ) and c.type = 'mcq';
+                  ) and category = 'mcq';
             `);
     }
 )
@@ -59,6 +75,5 @@ publicRouter.route("/submissions/:problemid").get(
             `);
     }
 )
-
 
 module.exports = publicRouter;
