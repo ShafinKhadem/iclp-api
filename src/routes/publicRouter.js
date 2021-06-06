@@ -76,4 +76,29 @@ publicRouter.route("/submissions/:problemid").get(
     }
 )
 
+publicRouter.route("/best/:userid").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+
+        jsonDBQuery(res, next,
+            SQL`
+            select q1.*, q2.max_score
+            from (select challenge_id, score, min(time) as time
+                  from challenge_results
+                  where (challenge_id, score) in (
+                      select challenge_id, max(score) score
+                      from challenge_results
+                      where user_id = ${params.userid}
+                        and score > 0
+                      group by challenge_id)
+                  group by challenge_id, score) as q1
+                     join (
+                select id, score max_score
+                from challenges
+            ) q2 on q1.challenge_id = q2.id;
+            `);
+    }
+);
+
 module.exports = publicRouter;
