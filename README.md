@@ -32,6 +32,8 @@
 
 ### Project Info
 
+-   Make sure that node version is 14 (latest stable).
+
 -   Install all dependencies
 
     ```
