@@ -80,9 +80,7 @@ publicRouter.route("/best/:userid").get(
 
     async (req, res, next) => {
         const { params, query, body, user, file } = req;
-
-        jsonDBQuery(res, next,
-            SQL`
+        const sql = SQL`
             select q1.*, q2.max_score
             from (select challenge_id, score, min(time) as time
                   from challenge_results
@@ -90,6 +88,11 @@ publicRouter.route("/best/:userid").get(
                       select challenge_id, max(score) score
                       from challenge_results
                       where user_id = ${params.userid}
+            `;
+        if (query.problemid !== undefined) {
+            sql.append(` and challenge_id = ${query.problemid} `);
+        }
+        sql.append(`
                         and score > 0
                       group by challenge_id)
                   group by challenge_id, score) as q1
@@ -98,6 +101,7 @@ publicRouter.route("/best/:userid").get(
                 from challenges
             ) q2 on q1.challenge_id = q2.id;
             `);
+        jsonDBQuery(res, next, sql);
     }
 );
 

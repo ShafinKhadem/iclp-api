@@ -26,7 +26,11 @@
     Request body: _does not require_
 -   /protected
     Request body: _does not require_
-    This is for testing authentication, will delete later.
+    This is for testing authentication
+
+-   /public/best/:userid[?problemid=]
+    get best score(s) for given user [and problem]. best score means: highest score, earliest submission time.
+    Also return problem's max_score to compare with this user's score.
 
     _This will be updated along with implementation._
 
