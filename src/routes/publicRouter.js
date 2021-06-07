@@ -99,7 +99,7 @@ publicRouter.route("/best/:userid").get(
                      join (
                 select id, score max_score
                 from challenges
-            ) q2 on q1.challenge_id = q2.id;
+            ) q2 on q1.challenge_id = q2.id order by time;
             `);
         jsonDBQuery(res, next, sql);
     }
