@@ -21,23 +21,45 @@ publicRouter.route("/problems/:topic").get(
     (req, res, next) => {
         jsonDBQuery(res, next,
             SQL`
-            select *
-            from challenges
-            where id in
-                  (
-                      select challenge_id
-                      from challenge_topics
-                      where topic_id in
-                            (
-                                select id
-                                from topics
-                                where name = ${req.params.topic}
-                            )
-                  )
-              and category = 'code';
+            select q1.*, coalesce(q2.score, 0) score
+            from (
+                     select id, title, difficulty, score as maxscore
+                     from challenges
+                     where id in
+                           (
+                               select challenge_id
+                               from challenge_topics
+                               where topic_id in
+                                     (
+                                         select id
+                                         from topics
+                                         where name = ${req.params.topic}
+                                     )
+                           )
+                       and category = 'code') q1
+                     left join
+
+                 (select challenge_id, max(score) score
+                  from challenge_results
+                  where user_id = ${req.query.userid}
+                  group by challenge_id) q2 on challenge_id = id;
             `);
     }
 )
+
+publicRouter.route("/problem/:id").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+
+        jsonDBQuery(res, next,
+            SQL`
+            select *
+            from challenges
+            where id = ${params.id};
+            `);
+    }
+);
 
 publicRouter.route("/challenge/:id").get(
     async (req, res, next) => {
@@ -93,7 +115,6 @@ publicRouter.route("/best/:userid").get(
             sql.append(` and challenge_id = ${query.problemid} `);
         }
         sql.append(`
-                        and score > 0
                       group by challenge_id)
                   group by challenge_id, score) as q1
                      join (
