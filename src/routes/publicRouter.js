@@ -105,4 +105,30 @@ publicRouter.route("/best/:userid").get(
     }
 );
 
+publicRouter.route("/rank").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+
+        const sql = SQL`
+            select *
+            from (
+                     select *, row_number() over () rank
+                     from (
+                              select user_id, sum(score) total_score
+                              from (
+                                       select user_id, max(score) score
+                                       from challenge_results
+                                       group by user_id, challenge_id) q1
+                              group by user_id
+                              order by total_score desc) q2) q3
+            `;
+        if (query.userid !== undefined) {
+            sql.append(`where user_id = ${query.userid}`);
+        }
+        sql.append(';');
+        jsonDBQuery(res, next, sql);
+    }
+);
+
 module.exports = publicRouter;
