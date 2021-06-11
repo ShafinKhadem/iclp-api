@@ -218,7 +218,6 @@ CREATE TABLE public.users (
     hash character varying(255),
     name character varying(255),
     affiliation character varying(255),
-    ranking integer DEFAULT 0,
     is_premium boolean DEFAULT false NOT NULL,
     salt character varying NOT NULL
 );
@@ -283,6 +282,11 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 COPY public.challenge_results (id, challenge_id, user_id, "time", score, opponent_id, details) FROM stdin;
 2	1	1	2021-05-31 00:01:12.773866	5	\N	\N
 1	1	1	2021-05-30 22:57:16.354623	10	\N	TLE/MLE/lost to opponent etc.?
+3	2	1	2021-06-07 04:28:51.660716	15	\N	\N
+4	3	1	2021-06-07 07:02:41.8656	5	\N	\N
+5	4	1	2021-06-07 07:02:41.8656	5	\N	\N
+6	1	2	2021-06-10 06:05:53.115075	5	\N	\N
+7	1	1	2021-06-10 06:31:44.485811	10	\N	\N
 \.
 
 
@@ -350,11 +354,11 @@ COPY public.topics (id, name, description) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, hash, name, affiliation, ranking, is_premium, salt) FROM stdin;
-1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	\N	0	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe
-2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	0	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO
-3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	0	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO
-4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	0	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO
+COPY public.users (id, email, hash, name, affiliation, is_premium, salt) FROM stdin;
+1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	\N	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe
+2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO
+3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO
+4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO
 \.
 
 
@@ -362,7 +366,7 @@ COPY public.users (id, email, hash, name, affiliation, ranking, is_premium, salt
 -- Name: challenge_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenge_results_id_seq', 2, true);
+SELECT pg_catalog.setval('public.challenge_results_id_seq', 7, true);
 
 
 --

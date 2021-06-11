@@ -11,3 +11,4 @@ It may need to change something in database. If you change anything, please writ
 7. Added category, difficulty and score in challenges
 7. Added opponent_id and details in challenge_results
 8. Added language enum
+9. Remove ranking from user
