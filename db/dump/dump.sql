@@ -287,6 +287,8 @@ COPY public.challenge_results (id, challenge_id, user_id, "time", score, opponen
 5	4	1	2021-06-07 07:02:41.8656	5	\N	\N
 6	1	2	2021-06-10 06:05:53.115075	5	\N	\N
 7	1	1	2021-06-10 06:31:44.485811	10	\N	\N
+8	1	3	2021-06-11 13:19:39.429722	5	\N	\N
+9	1	4	2021-06-11 13:25:31.322649	3	\N	\N
 \.
 
 
@@ -315,10 +317,10 @@ COPY public.challenge_topics (challenge_id, topic_id) FROM stdin;
 --
 
 COPY public.challenges (id, title, content, category, difficulty, score) FROM stdin;
-1	Loops	problem statement and sample tests	code	hard	20
 2	MCQ_loops	problem with solutions maybe?	mcq	hard	15
 4	conditionals	whatever	code	easy	5
 3	Arrays	whatever	code	medium	10
+1	Multiplication	you will be given an integer n (1 < n < 100) as input. output n*5.	code	hard	20
 \.
 
 
@@ -366,7 +368,7 @@ COPY public.users (id, email, hash, name, affiliation, is_premium, salt) FROM st
 -- Name: challenge_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenge_results_id_seq', 7, true);
+SELECT pg_catalog.setval('public.challenge_results_id_seq', 9, true);
 
 
 --
