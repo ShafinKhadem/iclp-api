@@ -108,9 +108,10 @@ publicRouter.route("/submissions/:problemid").get(
     (req, res, next) => {
         jsonDBQuery(res, next,
             SQL`
-            select *
+            select id, user_id, score, details, time
             from challenge_results
-            where challenge_id = ${req.params.problemid};
+            where challenge_id = ${req.params.problemid}
+            order by time desc;
             `);
     }
 )
