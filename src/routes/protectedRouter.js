@@ -24,7 +24,7 @@ protectedRouter.route("/").get(isAuth, (req, res, next) => {
 });
 
 
-async function spawnChild(command, args, outputFilePath = tmpDir + '/out.log', inputFilePath) {
+async function spawnChild(command, args, outputFilePath = tmpDir + '/out.log', inputFilePath, seconds = 60) {
     const out = fs.openSync(outputFilePath, 'w');
     const child = spawn(command, args, {
         stdio: [inputFilePath ? fs.openSync(inputFilePath, 'r') : 'ignore', out, 'pipe']
@@ -40,33 +40,51 @@ async function spawnChild(command, args, outputFilePath = tmpDir + '/out.log', i
     });
 
     const exitCode = await new Promise((resolve, reject) => {
-        child.on('close', resolve);
+        const timeout = setTimeout(() => {
+            console.log('Timeout');
+            try {
+                process.kill(child.pid, 'SIGKILL');
+            } catch (e) {
+                console.error('Cannot kill process');
+                console.error(e);
+            }
+            resolve(1);
+        }, seconds * 1000);
+        child.on('close', code => { clearTimeout(timeout); resolve(code); });
     });
     return { exitCode, err };
 };
 
-async function isCorrect(problemid, file) {
+async function judge(problemid, file) {
     const executable = `${tmpDir}/${file.filename}_exec`;
     const { exitCode, err } = await spawnChild("g++", ['-x', 'c++', file.path, '-o', `${executable}`]);
-    if (exitCode) {
+    let correct = true, details = "congratulations!";
+    if (exitCode !== 0) {
         console.error(err);
-        return false;
+        correct = false;
+        details = "compilation error";
     } else {
         const problemDir = `${appRoot}/uploads/${problemid}`;
         const testDir = problemDir + '/tests';
         const files = await fsPromises.readdir(testDir);
         for (const file of files) {
             const out = `${tmpDir}/${file.filename}_${file}.out`, inp = `${testDir}/${file}`;
-            await spawnChild(`${executable}`, [], out, inp);
-            const { exitCode, err } = await spawnChild(problemDir + '/checker', [inp, out]);
-            console.log(`test: ${file}, exitcode: ${exitCode}`);
+            const { exitCode } = await spawnChild(`${executable}`, [], out, inp, 1);
             if (exitCode !== 0) {
-                console.error(err);
-                return false;
+                correct = false;
+                details = 'time limit (1 second) exceeded';
+            } else {
+                const { exitCode, err } = await spawnChild(problemDir + '/checker', [inp, out]);
+                console.log(`test: ${file}, exitcode: ${exitCode}, error: ${err}`);
+                if (exitCode !== 0) {
+                    console.error(err);
+                    correct = false;
+                    details = "wrong answer";
+                }
             }
         }
     }
-    return true;
+    return { correct, details };
 };
 
 
@@ -88,9 +106,8 @@ protectedRouter.route("/submit").post(
             next(result);
         }
         const maxScore = result[0].score;
-        const correct = await isCorrect(body.problemid, file);
+        const { correct, details } = await judge(body.problemid, file);
         const score = correct ? maxScore : 0;
-        const details = 'fuck details';
         result = await dbQuery(
             SQL`
             insert into challenge_results(challenge_id, user_id, score, details)
@@ -100,8 +117,7 @@ protectedRouter.route("/submit").post(
         if (result instanceof Error) {
             next(result);
         }
-        console.log(score);
-        res.status(200).json({ score });
+        res.status(200).json({ score, details });
     }
 );
 
