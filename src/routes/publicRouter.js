@@ -47,6 +47,23 @@ publicRouter.route("/problems/:topic").get(
     }
 )
 
+publicRouter.route("/user/:id").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+
+        jsonDBQuery(res, next,
+            SQL`
+            select to_jsonb(q1) - 'hash' - 'salt' as user
+            from (
+                     select *
+                     from users
+                     where id = ${params.id}
+                 ) q1;
+            `);
+    }
+);
+
 publicRouter.route("/problem/:id").get(
 
     async (req, res, next) => {
