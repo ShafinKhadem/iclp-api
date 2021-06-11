@@ -30,6 +30,14 @@ const problemUpload = multer({
                 console.log(dir);
                 fs.mkdirSync(dir, { recursive: true });
                 cb(null, dir);
+                const testDir = `${dir}/tests`;
+                fs.mkdirSync(testDir);
+                body.tests.split(',').forEach((test, index) => {
+                    fs.writeFile(`${testDir}/${index}`, test, function (err) {
+                        if (err) throw err;
+                        console.log(`Saved test ${index}`);
+                    });
+                });
             }
         },
         filename(req, file, cb) {
@@ -47,8 +55,9 @@ adminRouter.route("/create-problem").post(
         console.log(req.file.filename);
         jsonDBQuery(res, next,
             SQL`
-            INSERT INTO public.challenge_topics (challenge_id, topic_id)
-            VALUES (${body.problemid}, ${body.topicid});
+            INSERT INTO challenge_topics (challenge_id, topic_id)
+            VALUES (${body.problemid}, ${body.topicid})
+            returning challenge_id id;
             `);
     }
 )
