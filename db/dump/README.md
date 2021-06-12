@@ -14,3 +14,6 @@
 -   Run `psql iclp_db < infile.sql`. (Details are [here](https://www.postgresql.org/docs/9.1/backup-dump.html))
 -   Now we have a ready database.
 -   Note that, this dump is different than our previous dump. Database is slightly changed. If you had an existing database, you can drop that.
+
+## ERD
+![Tentative ERD](ERD.png)
