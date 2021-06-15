@@ -129,6 +129,9 @@ publicRouter.route("/best/:userid").get(
                       from challenge_results
                       where user_id = ${params.userid}
             `;
+        if (query.topicid !== undefined && query.topicid !== '0') {
+            sql.append(`and challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid})`);
+        }
         if (query.problemid !== undefined) {
             sql.append(` and challenge_id = ${query.problemid} `);
         }
@@ -157,9 +160,14 @@ publicRouter.route("/rank").get(
                               from (
                                        select user_id, max(score) score
                                        from challenge_results
+            `;
+        if (query.topicid !== undefined && query.topicid !== '0') {
+            sql.append(`where challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid})`);
+        }
+        sql.append(`
                                        group by user_id, challenge_id) q1
                               group by user_id) q2) q3
-            `;
+            `);
         if (query.userid !== undefined) {
             sql.append(`where user_id = ${query.userid}`);
         }

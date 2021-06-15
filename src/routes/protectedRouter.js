@@ -56,6 +56,7 @@ async function spawnChild(command, args, outputFilePath = tmpDir + '/out.log', i
 };
 
 async function judge(problemid, file) {
+    // TODO: add memory limit and prevent thread creation
     const executable = `${tmpDir}/${file.filename}_exec`;
     const { exitCode, err } = await spawnChild("g++", ['-x', 'c++', file.path, '-o', `${executable}`]);
     let correct = true, details = "congratulations!";
