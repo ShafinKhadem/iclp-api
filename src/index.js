@@ -11,6 +11,7 @@ const logoutRouter = require("./routes/logoutRouter");
 const protectedRouter = require("./routes/protectedRouter");
 const publicRouter = require("./routes/publicRouter");
 const adminRouter = require("./routes/adminRouter");
+const mcqRouter = require("./routes/mcqRouter");
 var cors = require("cors");
 
 const PORT = process.env.API_PORT || 5000;
@@ -55,6 +56,7 @@ app.use("/logout", logoutRouter);
 app.use("/protected", protectedRouter);
 app.use("/public", publicRouter);
 app.use("/admin", adminRouter);
+app.use("/mcq", mcqRouter);
 app.all("*", (req, res, next) => {
     err = new Error("Not supported yet");
     err.statusCode = 400;
