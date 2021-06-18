@@ -152,7 +152,7 @@ publicRouter.route("/rank").get(
     async (req, res, next) => {
         const { params, query, body, user, file } = req;
         const sql = SQL`
-            select *
+            select rank, name, total_score, user_id
             from (
                      select *, rank() over (order by total_score desc)
                      from (
@@ -168,6 +168,7 @@ publicRouter.route("/rank").get(
                                        group by user_id, challenge_id) q1
                               group by user_id) q2) q3
             `);
+            sql.append(`inner join users on user_id = id`);
         if (query.userid !== undefined) {
             sql.append(`where user_id = ${query.userid}`);
         }
