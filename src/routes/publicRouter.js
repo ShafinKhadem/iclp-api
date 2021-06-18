@@ -179,4 +179,17 @@ publicRouter.route("/rank").get(
     }
 );
 
+
+publicRouter.route("/activity/:userId").get(
+    (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            select date(time), count(*)
+            from challenge_results
+            where user_id = ${req.params.userId}
+            group by date(time);
+            `);
+    }
+)
+
 module.exports = publicRouter;
