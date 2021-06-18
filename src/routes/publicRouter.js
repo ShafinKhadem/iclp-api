@@ -168,7 +168,9 @@ publicRouter.route("/rank").get(
                                        group by user_id, challenge_id) q1
                               group by user_id) q2) q3
             `);
-            sql.append(`inner join users on user_id = id`);
+        sql.append(`
+            inner join users on user_id = id
+            `);
         if (query.userid !== undefined) {
             sql.append(`where user_id = ${query.userid}`);
         }
