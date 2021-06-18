@@ -16,4 +16,9 @@
 -   Note that, this dump is different than our previous dump. Database is slightly changed. If you had an existing database, you can drop that.
 
 ## ERD
+
 ![Tentative ERD](ERD.png)
+
+### Note
+
+Although git keeps track of dump, I will upload new dumps in separate file with timestamps.
