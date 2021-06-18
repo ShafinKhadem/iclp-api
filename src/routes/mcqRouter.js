@@ -91,7 +91,7 @@ mcqRouter.route("/submit/:resultId").post(isAuth, async (req, res, next) => {
             if (req.body.answers[i] == null) continue;
             if (questions.questions[i].type === 1) {
                 if (req.body.answers[i] == questions.questions[i].answer)
-                    score += questions.questions[i].points;
+                    score += parseInt(questions.questions[i].points);
             } else {
                 req.body.answers[i].sort();
                 questions.questions[i].answer.sort();
@@ -108,7 +108,7 @@ mcqRouter.route("/submit/:resultId").post(isAuth, async (req, res, next) => {
                             break;
                     }
                     if (j === req.body.answers[i].length)
-                        score += questions.questions[i].points;
+                        score += parseInt(questions.questions[i].points);
                 }
             }
         }
