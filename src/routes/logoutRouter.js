@@ -1,5 +1,5 @@
 const express = require("express");
-const isAuth = require("../middlewares/auth");
+const { isAuth } = require("../middlewares/auth");
 
 const logoutRouter = express.Router({ mergeParams: true });
 

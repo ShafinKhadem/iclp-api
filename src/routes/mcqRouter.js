@@ -1,7 +1,6 @@
 const express = require("express");
 const pool = require("../config/pool");
-const isAuth = require("../middlewares/auth");
-const { validate } = require("../util");
+const { isAuth } = require("../middlewares/auth");
 
 const mcqRouter = express.Router({ mergeParams: true });
 
