@@ -14,13 +14,11 @@ const verifyCallback = async (username, password, done) => {
             username,
         ]);
         if (query.rowCount !== 1) return done(null, false);
-        console.log(query.rows);
         const { hash, salt, ...userObj } = query.rows[0];
         const hashedPassword = await bcrypt.hash(password, salt);
         if (hashedPassword !== hash) return done(null, false);
         return done(null, userObj);
     } catch (err) {
-        console.log("hhhhh");
         return done(null, false);
     }
 };
