@@ -13,3 +13,4 @@ It may need to change something in database. If you change anything, please writ
 9. Added language enum
 10. Remove ranking from user
 11. Added time column in challenges table
+12. Added is_active, last_access column in users
