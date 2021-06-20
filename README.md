@@ -116,7 +116,7 @@
     ```
 
 
--    _This will be updated along with implementation._
+-    <span style="color:cyan">_This will be updated along with implementation._</span>
 
 ### Project Info
 
