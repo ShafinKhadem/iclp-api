@@ -192,4 +192,26 @@ publicRouter.route("/activity/:userId").get(
     }
 )
 
+publicRouter.route("/activeusers/").get(
+    (req, res, next) => {
+        jsonDBQuery(res, next,
+            SQL`
+            SELECT user_scores.user_id AS userid, users.name AS name, user_scores.total_score as score
+            FROM users, (
+                    SELECT user_id, SUM(score) AS total_score
+                    FROM (
+                            SELECT user_id, challenge_id, MAX(score) as score
+                            FROM public.challenge_results
+                            GROUP BY user_id, challenge_id
+                            ORDER BY user_id
+                        ) AS CHALLENGE_SCORES
+                    GROUP BY user_id
+                ) AS user_scores
+            WHERE user_scores.user_id = users.id 
+                AND users.is_active = true 
+                AND EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - users.last_access)) < 3 * 60 * 60;
+            `);
+    }
+)
+
 module.exports = publicRouter;
