@@ -98,7 +98,25 @@
 -   `/public/rank[?userid=][?topicid=]`  
     get rank of user(s) [for given topic]. _topicid=0 means all topics._
 
-    _This will be updated along with implementation._
+-   `/public/activeusers`
+    get currently active user lists<br/>
+    Request body: _does not require_<br/>
+    Response body: Javascript array of `json` data
+    
+    ```javascript
+    [
+        {
+            "userid" : Number,
+            "name" : String,
+            "score" : String
+        },
+        ...
+    ]
+
+    ```
+
+
+-    _This will be updated along with implementation._
 
 ### Project Info
 
