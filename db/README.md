@@ -14,3 +14,5 @@ It may need to change something in database. If you change anything, please writ
 10. Remove ranking from user
 11. Added time column in challenges table
 12. Added is_active, last_access column in users
+12. Added a new table named invitations. It saves play infos.
+13. Added dual_status enum
