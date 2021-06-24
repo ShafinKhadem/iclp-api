@@ -52,7 +52,7 @@ mcqRouter.route("/start/:challengeId").post(isAuth, async (req, res, next) => {
             this[index].answer = undefined;
         }, questions.questions);
         const query = await pool.query(
-            "insert into challenge_results (id, challenge_id, user_id, time, score, opponent_id, details)values (DEFAULT, $1, $2, DEFAULT, -1, null, null) returning id",
+            "insert into challenge_results (id, challenge_id, user_id, time, score, exam_id, details)values (DEFAULT, $1, $2, DEFAULT, -1, null, null) returning id",
             [req.params.challengeId, req.user.id]
         );
         questions.resultId = query.rows[0].id;
