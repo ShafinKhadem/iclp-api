@@ -169,7 +169,7 @@ publicRouter.route("/rank").get(
                               group by user_id) q2) q3
             `);
         sql.append(`
-            inner join users on user_id = id
+            inner join users on user_id = id order by rank
             `);
         if (query.userid !== undefined) {
             sql.append(`where user_id = ${query.userid}`);
