@@ -88,8 +88,115 @@
     Request body: _does not require_ <br/>
     User starts this challenge. Timer starts as soon as user hit this endpoint.
 
--   `/logout`
-    Request body: _does not require_
+-   `/dual/invitations?userid=...&days=...`
+    get list of dual notifications for a particilura user filtered by last n days. 
+
+    Request body: _does not require_ <br/>
+    Response body: Javascript array of `json` data
+    
+    ```javascript
+    [
+        {
+            "exam_id" : Number,
+            "challenger_id" : Number,
+            "challenger_name" : String,
+            "challengee_id" : Number,
+            "challengee_name" : String,
+            "topic_id" : Number,
+            "topic_name" : String,
+            "status" : String,
+            "last_accessed" : Date
+        },
+        ...
+    ]
+    ```
+
+-   `/dual/invite`
+    Invite a user to a dual challenge on a particular topic
+
+    Request body: `json` data
+    ```javascript
+    {
+        "challengerId" : Number,
+        "challengeeId" : Number,
+        "topicId" : Number,
+        "challengeId" : Number,
+    }
+    ```
+    Response body: `json` data containing challenge_id
+    ```javascript
+    {
+        "id" : Number
+    }
+    ```
+
+-   `/dual/accept`
+    Accept a user's invitation on a particular topic
+
+    Request body: `json` data
+    ```javascript
+    {
+        "examId" : Number,
+    }
+    ```
+    Response body: `json` data containing challenge_id
+    ```javascript
+    {
+        "id" : Number
+    }
+    ```
+
+-   `/dual/reject`
+    Reject a user's invitation on a particular topic
+
+    Request body: `json` data
+    ```javascript
+    {
+        "examId" : Number,
+    }
+    ```
+    Response body: `json` data containing challenge_id
+    ```javascript
+    {
+        "id" : Number
+    }
+    ```
+
+-   `/dual/complete`
+    Complete a dual challenge on a particular topic
+
+    Request body: `json` data
+    ```javascript
+    {
+        "examId" : Number,
+    }
+    ```
+    Response body: `json` data containing challenge_id
+    ```javascript
+    {
+        "id" : Number
+    }
+    ```
+
+-   `/dual/start?examId=...&challengeId=...`
+
+    Request body: _does not require_ <br/>
+    User starts this challenge. Timer starts as soon as user hit this endpoint.
+
+-   `/dual/result?examId=...`
+
+    Request body: _does not require_ <br/>
+    Response body: Javascript Array(2) of `json` data
+    ```javascript
+    {
+        "problem_title" : String,
+        "question_answer_set" : JSON,
+        "participant_id" : Number,
+        "participant_name" : String,
+        "participant_mark" : Number,
+        "participant_submission" : Array,
+    }
+    ```
 
 -   `/public/best/:userid[?problemid=][?topicid=]`  
     get best score(s) for given user [and problem] [and topic]. best score means: highest score, earliest submission time.
@@ -115,8 +222,11 @@
 
     ```
 
+-   `/logout`
+    Request body: _does not require_
 
--    <span style="color:cyan">_This will be updated along with implementation._</span>
+
+-    _This will be updated along with implementation._
 
 ### Project Info
 
