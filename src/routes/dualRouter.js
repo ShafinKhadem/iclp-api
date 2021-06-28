@@ -1,5 +1,5 @@
 const express = require("express");
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 const pool = require("../config/pool");
 const SQL = require("sql-template-strings");
 const { isAuth } = require("../middlewares/auth");
@@ -160,6 +160,33 @@ dualRouter.route("/start").post(isAuth, async (req, res, next) => {
         next(error);
     }
 });
+
+
+dualRouter.route("/result").get(isAuth, async (req, res, next) => {
+    try {
+        console.log(req.query.examId);
+        const sql = 
+            SQL`
+                SELECT title AS problem_title,
+                    content as question_answer_set,
+                    user_id as participant_id,
+                    name as participant_name,
+                    challenge_results.score as participant_mark,
+                    details as participant_submission
+                FROM challenges, users, challenge_results
+                WHERE users.id = challenge_results.user_id
+                    AND challenge_results.challenge_id = challenges.id
+                    AND challenge_results.exam_id = ${req.query.examId};
+            `;
+        jsonDBQuery(res, next, sql);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
+
+
 
 	// --generate new type and update status column type (no need to run anymore)
 	// select enum_range(null::dual_status);
