@@ -11,8 +11,8 @@ dualRouter.use(express.json());
 
 dualRouter.route("/invitations").get(isAuth, async (req, res, next) => {
     const userid = req.query.userid;
-    console.log("userid : ", userid);
-    const allowed_hours = 24;
+    console.log("userid : ", userid, " last ", req.query.days, " days");
+    const allowed_hours = req.query.days * 24;
     console.log("GET OK!");
     const sql = 
         SQL`
