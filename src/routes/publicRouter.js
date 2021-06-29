@@ -152,29 +152,26 @@ publicRouter.route("/rank").get(
     async (req, res, next) => {
         const { params, query, body, user, file } = req;
         const sql = SQL`
-            select rank, name, total_score, user_id
+            select rank() over (order by total_score desc), *
             from (
-                     select *, rank() over (order by total_score desc)
-                     from (
-                              select user_id, sum(score) total_score
-                              from (
-                                       select user_id, max(score) score
-                                       from challenge_results
+                     select users.name, coalesce(q2.totalscore, 0) total_score, users.id user_id
+                     from users
+                              left join (
+                         select user_id, sum(score) totalscore
+                         from (
+                                  select user_id, max(score) score
+                                  from challenge_results
             `;
         if (query.topicid !== undefined && query.topicid !== '0') {
             sql.append(`where challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid})`);
         }
         sql.append(`
                                        group by user_id, challenge_id) q1
-                              group by user_id) q2) q3
-            `);
-        sql.append(`
-            inner join users on user_id = id
+                              group by user_id) q2 on users.id = q2.user_id) q3
             `);
         if (query.userid !== undefined) {
             sql.append(`where user_id = ${query.userid}`);
         }
-        sql.append('order by rank;'); // should this work properly
         jsonDBQuery(res, next, sql);
     }
 );
