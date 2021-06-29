@@ -52,6 +52,24 @@ dualRouter.route("/invite").post(isAuth,
     }
 );
 
+dualRouter.route("/archive").post(isAuth, 
+    (req, res, next) => {
+        try {
+            let outDayNum = 1;
+            jsonDBQuery(res, next,
+                SQL`
+                UPDATE invitations
+                SET status = 'archived'
+                WHERE EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - last_accessed)) > ${outDayNum} * 24 * 60 * 60 / 2
+                      AND status = 'pending';
+                `
+            );
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 dualRouter.route("/accept").post(isAuth, 
     (req, res, next) => {
         try {
@@ -184,22 +202,5 @@ dualRouter.route("/result").get(isAuth, async (req, res, next) => {
     }
 });
 
-
-
-
-
-	// --generate new type and update status column type (no need to run anymore)
-	// select enum_range(null::dual_status);
-	// ALTER TABLE invitations
-	// ALTER COLUMN status TYPE dual_status USING status::dual_status;
-
-	// --delete previous rows and set PK to start from 1
-	// DELETE FROM invitations;
-	// SELECT setval('invitations_id_seq', 1, false); 
-
-	// --insert new invitation and visualise
-    // INSERT INTO invitations(challenger_id, challengee_id, topic_id, status, challenge_id, last_accessed)
-    // VALUES (2, 3, 1, 'accepted', 1, NULL, CURRENT_TIMESTAMP);
-	// SELECT * FROM invitations;
 
 module.exports = dualRouter;

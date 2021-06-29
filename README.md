@@ -130,6 +130,13 @@
     }
     ```
 
+-   `/dual/archive`
+    Archive all `pending` outdated invitations 
+
+    Request body: _does not require_<br/>
+    Response body: _does not require_
+
+
 -   `/dual/accept`
     Accept a user's invitation on a particular topic
 
