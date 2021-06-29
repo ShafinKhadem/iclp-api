@@ -358,52 +358,21 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 COPY public.challenge_results (id, challenge_id, user_id, "time", score, exam_id, details) FROM stdin;
-2	1	1	2021-05-31 00:01:12.773866	5	\N	\N
-1	1	1	2021-05-30 22:57:16.354623	10	\N	TLE/MLE/lost to opponent etc.?
-4	3	1	2021-06-07 07:02:41.8656	5	\N	\N
-5	4	1	2021-06-07 07:02:41.8656	5	\N	\N
-6	1	2	2021-06-10 06:05:53.115075	5	\N	\N
-7	1	1	2021-06-10 06:31:44.485811	10	\N	\N
-8	1	3	2021-06-11 13:19:39.429722	5	\N	\N
-9	1	4	2021-06-11 13:25:31.322649	3	\N	\N
-24	2	1	2021-06-17 19:25:06.149994	11	\N	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree"]]
-25	2	1	2021-06-17 19:40:48.42397	5	\N	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Number of Trees"]]
-26	2	1	2021-06-17 19:41:26.245779	15	\N	["None of the above",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Depth of Tree"]]
-27	5	1	2021-06-18 11:18:24.715821	2	\N	["<script>","Object-Oriented","Ignores the statements"]
-28	2	1	2021-06-18 20:44:47.834637	0	\N	["PCA",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Number of Trees"]]
-29	2	1	2021-06-20 12:50:42.555463	14	\N	["K-Means",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Learning Rate"]]
-30	2	3	2021-06-23 21:33:44.185688	5	\N	["K-Means",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Number of Trees"]]
-31	6	1	2021-06-24 13:14:23.479912	9	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-32	6	1	2021-06-24 13:58:12.495405	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-33	6	1	2021-06-24 14:21:05.723699	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-34	6	1	2021-06-24 14:24:38.721959	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-35	6	1	2021-06-24 14:25:08.213504	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-36	6	1	2021-06-24 14:28:40.419481	1	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(c))"],"n = sizeof(arr)",["copy_list = ori_list[:]"],"s == s[::1]"]
-37	6	1	2021-06-24 14:30:02.125203	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-38	6	1	2021-06-24 14:33:26.677693	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-39	6	1	2021-06-24 14:34:32.277982	-1	\N	\N
-40	6	1	2021-06-24 14:35:13.846687	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-41	6	1	2021-06-24 15:54:12.33454	6	\N	["sum = a + b",null,"n = len(arr)",["copy_list = ori_list[:]"],"s == s[::-1]"]
-42	6	3	2021-06-24 15:57:33.6123	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-43	6	1	2021-06-24 15:58:33.497585	6	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(c))"],"n = len(arr)",["copy_list = ori_list[:]"],"s == s[::-1]"]
-44	6	1	2021-06-24 18:08:01.120037	11	11	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-45	2	3	2021-06-24 18:25:00.432597	5	23	["K-Means",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Depth of Tree","Learning Rate"]]
-46	2	1	2021-06-24 18:46:17.124467	0	23	["PCA",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function.","In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Number of Trees"]]
-47	6	1	2021-06-24 18:52:44.36299	11	21	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-48	6	3	2021-06-24 18:53:46.385454	11	21	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-49	6	1	2021-06-24 21:37:10.929063	6	22	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"n = len(arr)",["copy_list = ori_list[:]"],"s == s[::-1]"]
-50	6	1	2021-06-24 21:41:00.757368	-1	22	\N
-51	6	1	2021-06-24 21:41:22.623008	6	22	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]"],"s == s[::-1]"]
-52	6	3	2021-06-24 21:42:10.03951	11	11	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-53	6	3	2021-06-24 21:45:08.583246	0	11	[null,null,null,null,null]
-54	6	1	2021-06-24 21:59:26.109641	11	12	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-55	6	3	2021-06-24 22:00:10.521178	11	12	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-56	6	2	2021-06-24 22:17:26.345746	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-57	6	2	2021-06-24 22:20:46.927139	11	2	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-58	6	1	2021-06-24 22:23:25.730792	3	2	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["list_copy = [].extend(ori_list)"],"s = s[::-1]"]
-59	6	1	2021-06-24 22:29:41.304405	11	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-60	6	2	2021-06-24 22:38:42.769204	11	24	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
-61	6	3	2021-06-24 22:39:11.118108	1	24	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = length(arr)",null,"s == s[::1]"]
+10	2	3	2021-06-28 02:49:42.666988	20	3	["K-Means",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Depth of Tree"]]
+11	2	1	2021-06-28 02:50:04.879991	11	3	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree"]]
+13	6	1	2021-06-28 18:26:29.973611	3	5	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"n = len(arr)",[],"s = s[::-1]"]
+15	1	2	2021-06-28 18:38:09.09692	20	\N	congratulations!
+1	1	1	2021-05-31 00:01:12.773866	5	\N	\N
+2	1	1	2021-05-30 22:57:16.354623	10	\N	TLE/MLE/lost to opponent etc.?
+3	1	4	2021-06-11 13:25:31.322649	3	\N	\N
+4	2	1	2021-06-17 19:25:06.149994	11	\N	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree"]]
+12	1	3	2021-06-28 09:08:10.648788	20	\N	congratulations!
+14	6	4	2021-06-28 18:27:19.66563	9	5	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
+5	6	1	2021-06-28 02:43:10.202102	11	1	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
+6	6	3	2021-06-28 02:43:44.695588	9	1	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
+7	2	3	2021-06-28 02:46:50.100601	0	2	["PCA",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree","Learning Rate"]]
+8	2	1	2021-06-28 02:47:45.068696	0	2	["PCA",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Number of Trees"]]
+9	2	1	2021-06-28 02:48:46.163915	9	\N	["None of the above",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Learning Rate"]]
 \.
 
 
@@ -448,25 +417,11 @@ COPY public.challenges (id, title, content, category, difficulty, score, "time")
 --
 
 COPY public.invitations (exam_id, challenger_id, challengee_id, topic_id, status, challenge_id, last_accessed) FROM stdin;
-3	1	3	2	full_completed	1	2021-06-24 15:58:42.054869+06
-23	1	3	1	full_completed	2	2021-06-24 18:46:29.457699+06
-21	3	1	2	full_completed	6	2021-06-24 18:54:01.221733+06
-22	3	1	2	full_completed	6	2021-06-24 21:41:44.86856+06
-11	3	1	2	full_completed	6	2021-06-24 21:47:08.990107+06
-12	3	1	2	full_completed	6	2021-06-24 22:00:24.433417+06
-1	1	2	1	rejected	1	2021-06-24 22:18:37.688767+06
-2	1	2	2	full_completed	1	2021-06-24 22:23:32.868273+06
-5	2	3	1	rejected	1	2021-06-24 22:24:38.536546+06
-24	3	2	2	full_completed	6	2021-06-24 22:39:21.028102+06
-18	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-17	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-16	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-14	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-15	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-20	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-4	2	1	2	pending	1	2021-06-24 15:56:52.069028+06
-13	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
-19	3	1	2	pending	6	2021-06-24 15:56:52.069028+06
+1	3	1	2	full_completed	6	2021-06-28 02:43:55.752464+06
+2	1	3	1	full_completed	2	2021-06-28 02:47:49.973137+06
+3	1	3	1	full_completed	2	2021-06-28 02:50:11.149283+06
+4	1	3	1	rejected	2	2021-06-28 09:02:41.356106+06
+5	4	1	2	full_completed	6	2021-06-28 18:27:42.281804+06
 \.
 
 
@@ -499,7 +454,6 @@ KO-ZzIo6bePqPCLBTOXijbXYipNR6FhH	{"cookie":{"originalMaxAge":2591999998,"expires
 WoBHVngtJjowhkj3Vo5vqGVEGc671701	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T07:22:02.332Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 13:22:03
 mtQ8MSnxZW3U_jBcFDMl1RGnOoTRFfGy	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-24T16:40:06.107Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-24 22:40:07
 f4NoCb0aj-J2tCj1EoSSbPXZWXES0iIZ	{"cookie":{"originalMaxAge":2591999995,"expires":"2021-07-24T16:40:10.432Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-24 22:40:11
-owEtU9PTKdJS9VUYDGER9uGjkadDCOsv	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-20T16:12:53.225Z","httpOnly":true,"path":"/"}}	2021-07-20 22:12:54
 WzbRfeu87C-itwYV8n090gLX_WU8bgdJ	{"cookie":{"originalMaxAge":2591999993,"expires":"2021-07-24T16:22:27.893Z","httpOnly":true,"path":"/"},"passport":{"user":2}}	2021-07-24 22:22:28
 eXKEJtrFHmlfj69FAToqVMrBnJTMiR6u	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-21T20:07:18.943Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-22 02:07:19
 w0zt6wgTJcBlB0iP8X-vJH3TQhhEAS-K	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T05:30:01.714Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 11:30:02
@@ -508,6 +462,9 @@ IvixjXHnrWLRwnMvZJ95Lu-I222eX9ey	{"cookie":{"originalMaxAge":2592000000,"expires
 t4Z9TFp27WNFiya5ME2mFZnYeahXmYoW	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T16:33:04.696Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 22:33:05
 383Gww_gV-QM3fDDrV3felRFqkHIAtdO	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T03:56:03.089Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 09:56:04
 UXMopNL6-GagWUy8NuW7_ObNpEUorDjA	{"cookie":{"originalMaxAge":2591999994,"expires":"2021-07-23T15:52:07.060Z","httpOnly":true,"path":"/"},"passport":{"user":3}}	2021-07-23 21:52:08
+mT6W4nygZwN_D2kXUPCeRjmK3a5TuU--	{"cookie":{"originalMaxAge":2591999995,"expires":"2021-07-28T12:40:30.450Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-28 18:40:31
+UhGobmBeeHp6y9HuDgvpCMIHVbwI8E-f	{"cookie":{"originalMaxAge":2591999991,"expires":"2021-07-28T12:35:27.186Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-28 18:35:28
+owEtU9PTKdJS9VUYDGER9uGjkadDCOsv	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-28T04:52:33.317Z","httpOnly":true,"path":"/"}}	2021-07-28 10:52:34
 \.
 
 
@@ -528,10 +485,10 @@ COPY public.topics (id, name, description) FROM stdin;
 --
 
 COPY public.users (id, email, hash, name, affiliation, is_premium, salt, is_active, last_access) FROM stdin;
-4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	\N
-1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-06-24 22:22:53.046579+06
-2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-06-24 22:38:17.136216+06
-3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-06-24 22:11:14.262393+06
+3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-06-28 09:02:02.451316+06
+1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-06-28 18:25:43.059929+06
+4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	2021-06-28 18:24:21.587959+06
+2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-06-28 18:36:50.735423+06
 \.
 
 
@@ -539,7 +496,7 @@ COPY public.users (id, email, hash, name, affiliation, is_premium, salt, is_acti
 -- Name: challenge_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenge_results_id_seq', 61, true);
+SELECT pg_catalog.setval('public.challenge_results_id_seq', 15, true);
 
 
 --
@@ -553,7 +510,7 @@ SELECT pg_catalog.setval('public.challenges_id_seq', 6, true);
 -- Name: invitations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.invitations_id_seq', 24, true);
+SELECT pg_catalog.setval('public.invitations_id_seq', 5, true);
 
 
 --
