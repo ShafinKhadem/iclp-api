@@ -18,7 +18,7 @@ PGPASSWORD=postgres pg_dump -h localhost -U postgres -d iclp_db -f ~/Downloads/d
 
 ```
 PGPASSWORD=postgres pg_dump -h localhost -U postgres -d iclp_db -f ~/Downloads/dump-old.sql
-PGPASSWORD=postgres dropdb -h localhost -U postgres iclp_db
+PGPASSWORD=postgres dropdb -h localhost -U postgres iclp_db || exit
 PGPASSWORD=postgres createdb -h localhost -U postgres iclp_db
 PGPASSWORD=postgres psql -h localhost -U postgres -d iclp_db -f ~/Downloads/dump.sql
 ```
