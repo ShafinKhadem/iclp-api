@@ -46,7 +46,7 @@ const problemUpload = multer({
 });
 
 adminRouter.route("/create-problem").post(
-    // NOTE: rom now on, only admins can create problems
+    // NOTE: from now on, only admins can create problems
     isAdmin,
     // NOTE: multer.single('f') discards all fields after f
     problemUpload.single("checker"),
@@ -54,6 +54,8 @@ adminRouter.route("/create-problem").post(
         const body = req.body;
         console.log(body.problemid);
         console.log(req.file.filename);
+        // NOTE: upload automatically changes file permission, hence changing permission to suit our need:
+        fs.chmodSync(`${appRoot}/uploads/${body.problemid}/checker`, 0o775);
         jsonDBQuery(
             res,
             next,
