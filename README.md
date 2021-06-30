@@ -206,11 +206,20 @@
     ```
 
 -   `/public/best/:userid[?problemid=][?topicid=]`  
-    get best score(s) for given user [and problem] [and topic]. best score means: highest score, earliest submission time.
-    Also return problem's max*score to compare with this user's score. \_topicid=0 means all topics.*
+    get best score(s) for given user [and problem] [and topic] sorted by recency. best score means: highest score, earliest submission time.
+    Also return problem's max score to compare with this user's score. *_topicid=0 means all topics.*
+
+-   `/public/activities/:userid[?topicid=]`  
+    get all challenge results of userid [for given topic] sorted by recency. _topicid=0 means all topics._
+
+-   `/public/activity/:userid[?topicid=]`  
+    get activity_count per date of userid [for given topic]. _topicid=0 means all topics._
 
 -   `/public/rank[?userid=][?topicid=]`  
     get rank of user(s) [for given topic]. _topicid=0 means all topics._
+
+-   `/public/solidusercount/:topicid`  
+    get number of users with non-zero score in topicid. _topicid=0 means all topics._
 
 -   `/public/activeusers`
     get currently active user lists<br/>

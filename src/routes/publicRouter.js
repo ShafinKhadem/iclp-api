@@ -147,20 +147,6 @@ publicRouter.route("/best/:userid").get(
     }
 );
 
-publicRouter.route("/submissions/:userid").get(
-
-    async (req, res, next) => {
-        const { params, query, body, user, file } = req;
-        // TODO: maybe remove user_id from select
-        jsonDBQuery(res, next,
-            SQL`
-            select *
-            from challenge_results
-            where user_id = ${params.userid};
-            `);
-    }
-);
-
 publicRouter.route("/rank").get(
 
     async (req, res, next) => {
@@ -192,16 +178,58 @@ publicRouter.route("/rank").get(
     }
 );
 
+publicRouter.route("/solidusercount/:topicid").get(
 
-publicRouter.route("/activity/:userId").get(
-    (req, res, next) => {
-        jsonDBQuery(res, next,
-            SQL`
-            select date(time), count(*)
-            from challenge_results
-            where user_id = ${req.params.userId}
-            group by date(time);
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+        const sql = SQL`
+            select count(*)
+            from (select max(score) max_score
+                from challenge_results
+            `;
+        if (params.topicid !== '0') {
+            sql.append(` where challenge_id in (select challenge_id from challenge_topics where topic_id = ${params.topicid}) `);
+        }
+        sql.append(`
+                group by user_id) q1
+            where max_score > 0
             `);
+        jsonDBQuery(res, next, sql);
+    }
+);
+
+publicRouter.route("/activities/:userid").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+        // TODO: maybe remove user_id from select
+        const sql = SQL`
+            select *
+            from challenge_results
+            where user_id = ${params.userid}
+            `;
+        if (query.topicid !== undefined && query.topicid !== '0') {
+            sql.append(` and challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid}) `);
+        }
+        sql.append(' order by time desc;');
+        jsonDBQuery(res, next, sql);
+    }
+);
+
+publicRouter.route("/activity/:userid").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+        const sql = SQL`
+            select date(time) date, count(*)
+            from challenge_results
+            where user_id = ${params.userid}
+            `;
+        if (query.topicid !== undefined && query.topicid !== '0') {
+            sql.append(` and challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid}) `);
+        }
+        sql.append(' group by date;');
+        jsonDBQuery(res, next, sql);
     }
 )
 
