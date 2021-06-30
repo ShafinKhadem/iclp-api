@@ -15,6 +15,36 @@
 -   Now we have a ready database.
 -   Note that, this dump is different than our previous dump. Database is slightly changed. If you had an existing database, you can drop that.
 
+
+
+## Alternative instructions
+
+### Make user=postgres password=postgres
+
+```
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+```
+
+### backup iclp_db
+
+```
+bash backup.sh
+```
+
+### restore iclp_db
+
+```
+bash restore.sh dump.sql
+```
+
+
+### If you mess up any sequence
+
+```
+alter sequence "Users_id_seq" restart with 101;
+```
+
+
 ## ERD
 
 ![Tentative ERD](ERD.png)
