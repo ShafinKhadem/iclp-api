@@ -216,23 +216,6 @@ publicRouter.route("/activities/:userid").get(
     }
 );
 
-publicRouter.route("/activity/:userid").get(
-
-    async (req, res, next) => {
-        const { params, query, body, user, file } = req;
-        const sql = SQL`
-            select date(time) date, count(*)
-            from challenge_results
-            where user_id = ${params.userid}
-            `;
-        if (query.topicid !== undefined && query.topicid !== '0') {
-            sql.append(` and challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid}) `);
-        }
-        sql.append(' group by date;');
-        jsonDBQuery(res, next, sql);
-    }
-)
-
 publicRouter.route("/activeusers/").get(
     (req, res, next) => {
         jsonDBQuery(res, next,

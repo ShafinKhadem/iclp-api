@@ -212,9 +212,6 @@
 -   `/public/activities/:userid[?topicid=]`  
     get all challenge results of userid [for given topic] sorted by recency. _topicid=0 means all topics._
 
--   `/public/activity/:userid[?topicid=]`  
-    get activity_count per date of userid [for given topic]. _topicid=0 means all topics._
-
 -   `/public/rank[?userid=][?topicid=]`  
     get rank of user(s) [for given topic]. _topicid=0 means all topics._
 
