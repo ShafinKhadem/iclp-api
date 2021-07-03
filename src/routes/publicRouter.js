@@ -38,11 +38,11 @@ publicRouter.route("/problems/:topic").get(
                            )
                        and category = 'code') q1
                      left join
-
                  (select challenge_id, max(score) score
                   from challenge_results
                   where user_id = ${req.query.userid}
-                  group by challenge_id) q2 on challenge_id = id;
+                  group by challenge_id) q2 on challenge_id = id
+                  order by maxscore;
             `);
     }
 )
@@ -121,6 +121,38 @@ publicRouter.route("/best/:userid").get(
     async (req, res, next) => {
         const { params, query, body, user, file } = req;
         const sql = SQL`
+            select q1.*, q2.max_score, q2.category
+            from (select challenge_id, score, min(time) as time
+                  from challenge_results
+                  where (challenge_id, score) in (
+                      select challenge_id, max(score) score
+                      from challenge_results
+                      where user_id = ${params.userid}
+            `;
+        if (query.topicid !== undefined && query.topicid !== '0') {
+            sql.append(`and challenge_id in (select challenge_id from challenge_topics where topic_id = ${query.topicid})`);
+        }
+        if (query.problemid !== undefined) {
+            sql.append(` and challenge_id = ${query.problemid} `);
+        }
+        sql.append(`
+                      group by challenge_id)
+                  group by challenge_id, score) as q1
+                     join (
+                select id, score max_score, category
+                from challenges
+            ) q2 on q1.challenge_id = q2.id
+            order by time;
+            `);
+        jsonDBQuery(res, next, sql);
+    }
+);
+
+publicRouter.route("/bestcodingscores/:userid").get(
+
+    async (req, res, next) => {
+        const { params, query, body, user, file } = req;
+        const sql = SQL`
             select q1.*, q2.max_score
             from (select challenge_id, score, min(time) as time
                   from challenge_results
@@ -141,7 +173,9 @@ publicRouter.route("/best/:userid").get(
                      join (
                 select id, score max_score
                 from challenges
-            ) q2 on q1.challenge_id = q2.id order by time;
+                where category = 'code'
+            ) q2 on q1.challenge_id = q2.id
+            order by time desc;
             `);
         jsonDBQuery(res, next, sql);
     }

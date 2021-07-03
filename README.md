@@ -206,8 +206,11 @@
     ```
 
 -   `/public/best/:userid[?problemid=][?topicid=]`  
-    get best score(s) for given user [and problem] [and topic] sorted by recency. best score means: highest score, earliest submission time.
-    Also return problem's max score to compare with this user's score. *_topicid=0 means all topics.*
+    get best score(s) for given user [and problem] [and topic] in chronological order. best score means: highest score, earliest submission time.
+    Also return problem's max score (to compare with this user's score) and category. *_topicid=0 means all topics.*
+
+-   `/public/bestscores/:userid[?problemid=][?topicid=]`  
+    similar to best, except it considers only coding challenges and sorted by recency.
 
 -   `/public/activities/:userid[?topicid=]`  
     get all challenge results of userid [for given topic] sorted by recency. _topicid=0 means all topics._
