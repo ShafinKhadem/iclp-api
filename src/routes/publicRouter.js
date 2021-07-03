@@ -23,7 +23,7 @@ publicRouter.route("/problems/:topic").get(
             SQL`
             select q1.*, coalesce(q2.score, 0) score
             from (
-                     select id, title, difficulty, score as maxscore
+                     select id, title, difficulty, score as max_score
                      from challenges
                      where id in
                            (
@@ -42,7 +42,7 @@ publicRouter.route("/problems/:topic").get(
                   from challenge_results
                   where user_id = ${req.query.userid}
                   group by challenge_id) q2 on challenge_id = id
-                  order by maxscore;
+                  order by max_score;
             `);
     }
 )
