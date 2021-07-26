@@ -76,7 +76,7 @@ async function judge(problemid, file) {
         `${executable}`,
     ]);
     let correct = true,
-        details = "Correct Answer!";
+        details = "correct answer";
     if (exitCode !== 0) {
         console.error(err);
         correct = false;
