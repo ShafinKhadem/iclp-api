@@ -362,17 +362,33 @@ COPY public.challenge_results (id, challenge_id, user_id, "time", score, exam_id
 11	2	1	2021-06-28 02:50:04.879991	11	3	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree"]]
 13	6	1	2021-06-28 18:26:29.973611	3	5	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"n = len(arr)",[],"s = s[::-1]"]
 15	1	2	2021-06-28 18:38:09.09692	20	\N	congratulations!
+17	2	1	2021-06-29 12:46:20.115865	15	6	["PCA",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Depth of Tree"]]
+19	7	1	2021-06-29 12:58:33.325345	0	\N	wrong answer
+21	7	1	2021-06-29 13:00:59.270588	5	\N	congratulations!
+23	2	2	2021-06-30 14:30:31.89073	5	11	["K-Means",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Number of Trees"]]
+25	8	2	2021-06-30 14:50:10.997305	0	\N	time limit (1 second) exceeded
+28	9	3	2021-06-30 15:37:17.563134	2	13	["sum = a + b","n = len(arr)",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"]]
+31	2	2	2021-07-28 00:47:34.724334	0	14	["PCA",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],null]
 1	1	1	2021-05-31 00:01:12.773866	5	\N	\N
 2	1	1	2021-05-30 22:57:16.354623	10	\N	TLE/MLE/lost to opponent etc.?
 3	1	4	2021-06-11 13:25:31.322649	3	\N	\N
 4	2	1	2021-06-17 19:25:06.149994	11	\N	["K-Means",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree"]]
 12	1	3	2021-06-28 09:08:10.648788	20	\N	congratulations!
 14	6	4	2021-06-28 18:27:19.66563	9	5	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
+16	2	4	2021-06-29 12:45:41.841877	20	6	["K-Means",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Depth of Tree"]]
+18	7	1	2021-06-29 12:56:40.662738	0	\N	wrong answer
 5	6	1	2021-06-28 02:43:10.202102	11	1	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
 6	6	3	2021-06-28 02:43:44.695588	9	1	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"],"s == s[::-1]"]
 7	2	3	2021-06-28 02:46:50.100601	0	2	["PCA",["In SGD, you have to run through all the samples in your training set for a single update of a parameter in each iteration."],["Depth of Tree","Learning Rate"]]
 8	2	1	2021-06-28 02:47:45.068696	0	2	["PCA",["In GD and SGD, you update a set of parameters in an iterative manner to minimize the error function."],["Number of Trees"]]
 9	2	1	2021-06-28 02:48:46.163915	9	\N	["None of the above",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Learning Rate"]]
+20	1	1	2021-06-29 12:58:57.510394	20	\N	congratulations!
+22	2	3	2021-06-30 14:29:50.561653	14	11	["K-Means",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Number of Trees"]]
+24	6	1	2021-06-30 14:42:18.187572	8	\N	["sum = a + b",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"],"n = len(arr)",["copy_list = ori_list[:]"],"s == s[::-1]"]
+26	10	1	2021-06-30 15:34:27.287311	0	\N	compilation error
+27	10	1	2021-06-30 15:34:40.647769	5	\N	congratulations!
+29	9	2	2021-06-30 15:37:56.528483	3	13	["sum = a + b","n = sizeof(arr)",["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))"]]
+30	2	1	2021-07-28 00:46:42.508571	15	14	["None of the above",["In GD, you either use the entire data or a subset of training data to update a parameter in each iteration."],["Depth of Tree"]]
 \.
 
 
@@ -395,6 +411,10 @@ COPY public.challenge_topics (challenge_id, topic_id) FROM stdin;
 4	2
 5	4
 6	2
+7	1
+8	1
+9	2
+10	1
 \.
 
 
@@ -409,6 +429,10 @@ COPY public.challenges (id, title, content, category, difficulty, score, "time")
 5	Javascript Sample	{"questions":[{"type":1,"points":1,"statement":"Inside which HTML element do we put the JavaScript?","options":["<javascript>","<js>","<script>","<java>"],"answer":"<script>"},{"type":1,"points":1,"statement":"Which type of JavaScript language is ___","options":["Object-Oriented","Object-Based","Assembly-language"],"answer":"Object-Based"},{"type":1,"points":1,"statement":"When interpreter encounters an empty statements, what it will do?","options":["Shows a warning","Prompts to complete the statement","Ignores the statements"],"answer":"Ignores the statements"}]}	mcq	easy	3	30
 3	Arrays	whatever	code	medium	10	120
 6	python_dual	{"questions":[{"type":1,"points":"1","statement":"Select a Python3 program to add two numbers","options":["sum = a + b","sum = a - b","sum = b - a"],"answer":"sum = a + b"},{"type":2,"points":"2","statement":"Select correct option(s)","options":["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(c))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"answer":["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"]},{"type":1,"points":"2","statement":"How to find the length of an array","options":["n = len(arr)","n = length(arr)","n = sizeof(arr)"],"answer":"n = len(arr)"},{"type":2,"points":"3","statement":"What is the correct way to clone a list?","options":["copy_list = ori_list[:]","list_copy = [].extend(ori_list)","copy_list = ori_list"],"answer":["copy_list = ori_list[:]","list_copy = [].extend(ori_list)"]},{"type":1,"points":"3","statement":"Check if a string is palindrome or not?","options":["s == s[::-1]","s = s[::-1]","s == s[::1]","s != s[::-1]"],"answer":"s == s[::-1]"}]}	mcq	easy	11	120
+7	dummy	\n      you will be given an integer n (1 < n < 100) as input. output n*5.\n      	code	easy	5	\N
+8	Dummy_2	\n      you will be given an integer n (1 < n < 100) as input. output n*5.\n      	code	medium	10	\N
+9	Pythons are everywhere	{"questions":[{"type":1,"points":"2","statement":"Select a Python3 program to add two numbers","options":["sum = a + b","sum = a - b"],"answer":"sum = a + b"},{"type":1,"points":1,"statement":"How to find the length of an array","options":["n = len(arr)","n = sizeof(arr)"],"answer":"n = sizeof(arr)"},{"type":2,"points":1,"statement":"Select correct option(s)","options":["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(c))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"],"answer":["print(\\"The ASCII value of '\\" + c + \\"' is\\", ord('c'))","print(\\"The ASCII value of '\\" + c + \\"' is\\", ord(\\"c\\"))"]}]}	mcq	easy	4	30
+10	dummy_4	\n      you will be given an integer n (1 < n < 100) as input. output n*5.\n      	code	easy	5	\N
 \.
 
 
@@ -422,6 +446,15 @@ COPY public.invitations (exam_id, challenger_id, challengee_id, topic_id, status
 3	1	3	1	full_completed	2	2021-06-28 02:50:11.149283+06
 4	1	3	1	rejected	2	2021-06-28 09:02:41.356106+06
 5	4	1	2	full_completed	6	2021-06-28 18:27:42.281804+06
+6	1	4	1	full_completed	2	2021-06-29 12:46:27.931254+06
+8	3	1	1	rejected	2	2021-06-30 00:48:51.083627+06
+9	3	1	2	archived	6	2021-06-30 00:50:29.959881+06
+10	3	2	2	rejected	6	2021-06-30 14:29:10.052391+06
+11	2	3	1	full_completed	2	2021-06-30 14:30:38.282005+06
+12	1	2	2	rejected	6	2021-06-30 15:36:21.594392+06
+13	2	3	2	full_completed	6	2021-06-30 15:38:02.848219+06
+14	2	1	1	full_completed	2	2021-07-28 00:49:34.960337+06
+15	2	1	2	rejected	6	2021-07-28 00:52:26.581596+06
 \.
 
 
@@ -430,41 +463,14 @@ COPY public.invitations (exam_id, challenger_id, challengee_id, topic_id, status
 --
 
 COPY public.session_store (sid, sess, expire) FROM stdin;
-ZKkWQPqy3R5L-y4Hfzk38qOswPl8k7qz	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-01T15:41:31.148Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-01 21:41:32
-QtdXhr6w-Bqyit34yug8gI93rkbmgbQe	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:53:21.983Z","httpOnly":true,"path":"/"}}	2021-07-01 21:53:22
-0lKY9E_AavggUf6ODfyxqn-7p1Au_lp2	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:54:49.428Z","httpOnly":true,"path":"/"}}	2021-07-01 21:54:50
-M-to2p3PheU1CEnszDBCAjXkjrGmqcmS	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T15:59:44.422Z","httpOnly":true,"path":"/"}}	2021-07-01 21:59:45
-BASaKJptAgVQcOkz-YMzlqalxNXjbtDl	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:02:04.042Z","httpOnly":true,"path":"/"}}	2021-07-01 22:02:05
-DPuh2Xzbp6hh1pEdOt2MLIYF5rv09l_o	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:13:42.831Z","httpOnly":true,"path":"/"}}	2021-07-01 22:13:43
-iOTloxpN9sXA3-lx0ZTdDsnGycPU-n4_	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:13:46.904Z","httpOnly":true,"path":"/"}}	2021-07-01 22:13:47
-NQQj_goWO8zIHv1XPyYiMyR0omu1e9Uk	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:14:21.588Z","httpOnly":true,"path":"/"}}	2021-07-01 22:14:22
-umki_wV1mtWVdagd5iDZlPgH0cOh0sSL	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-01T16:17:13.619Z","httpOnly":true,"path":"/"}}	2021-07-01 22:17:14
-3xNLbfx7vQnl6LYFOXp7g535SuWS0CFl	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-16T16:48:44.732Z","httpOnly":true,"path":"/"}}	2021-07-16 22:48:45
-SizFT91fNM63PiPDacfZDQt7E3RDhaqj	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-17T07:42:40.079Z","httpOnly":true,"path":"/"}}	2021-07-17 13:42:41
-HHV9_hcfjirnlGWxpdEbSHboFgPC5CSA	{"cookie":{"originalMaxAge":2591999996,"expires":"2021-07-18T05:21:55.010Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-18 11:21:56
-QKboqcfPSRXGjaoPcwXe_O2J9ttm0sPW	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-18T04:20:38.157Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-18 10:20:39
-N99Zcc6BuAUwumWCes5NJnG-3WBP0oDi	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T16:14:46.167Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 22:14:47
-js8awdRFjR9CCBpaPvbgGWGMB0J3_1hs	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T16:20:39.639Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-20 22:20:40
-vp8C_8l4ITzxwcIcTxNZxI_-R_Dg3HRj	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T08:34:12.390Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 14:34:13
-WNYKUFGuIdWVBoByLLBqF9f_cyGyjb5G	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T08:35:23.288Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 14:35:24
---WfQrIAXI2p_e3HOOEkLLwqrg2GsMTi	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T14:34:34.930Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 20:34:35
-AOTZ-xqFtTXIrhUc5tYqI0HKbP4U1A_i	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T14:30:20.779Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 20:30:21
-LWliL3cVDYcGNM8MGyKyRcdeWnW12s9i	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-18T19:26:04.094Z","httpOnly":true,"path":"/"},"passport":{"user":1}}	2021-07-19 01:26:05
-KO-ZzIo6bePqPCLBTOXijbXYipNR6FhH	{"cookie":{"originalMaxAge":2591999998,"expires":"2021-07-19T14:55:48.994Z","httpOnly":true,"path":"/"}}	2021-07-19 20:55:49
-WoBHVngtJjowhkj3Vo5vqGVEGc671701	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T07:22:02.332Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 13:22:03
-mtQ8MSnxZW3U_jBcFDMl1RGnOoTRFfGy	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-24T16:40:06.107Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-24 22:40:07
-f4NoCb0aj-J2tCj1EoSSbPXZWXES0iIZ	{"cookie":{"originalMaxAge":2591999995,"expires":"2021-07-24T16:40:10.432Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-24 22:40:11
-WzbRfeu87C-itwYV8n090gLX_WU8bgdJ	{"cookie":{"originalMaxAge":2591999993,"expires":"2021-07-24T16:22:27.893Z","httpOnly":true,"path":"/"},"passport":{"user":2}}	2021-07-24 22:22:28
-eXKEJtrFHmlfj69FAToqVMrBnJTMiR6u	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-21T20:07:18.943Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-22 02:07:19
-w0zt6wgTJcBlB0iP8X-vJH3TQhhEAS-K	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T05:30:01.714Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 11:30:02
-8dcK1xeR-_LiyuZkx1QWAbYszI3bDuuI	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T05:30:23.225Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 11:30:24
-IvixjXHnrWLRwnMvZJ95Lu-I222eX9ey	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-19T16:15:29.499Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-19 22:15:30
-t4Z9TFp27WNFiya5ME2mFZnYeahXmYoW	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T16:33:04.696Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 22:33:05
-383Gww_gV-QM3fDDrV3felRFqkHIAtdO	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-20T03:56:03.089Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-20 09:56:04
-UXMopNL6-GagWUy8NuW7_ObNpEUorDjA	{"cookie":{"originalMaxAge":2591999994,"expires":"2021-07-23T15:52:07.060Z","httpOnly":true,"path":"/"},"passport":{"user":3}}	2021-07-23 21:52:08
-mT6W4nygZwN_D2kXUPCeRjmK3a5TuU--	{"cookie":{"originalMaxAge":2591999995,"expires":"2021-07-28T12:40:30.450Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-28 18:40:31
+mT6W4nygZwN_D2kXUPCeRjmK3a5TuU--	{"cookie":{"originalMaxAge":2591999988,"expires":"2021-08-26T18:53:45.378Z","httpOnly":true,"path":"/"},"passport":{}}	2021-08-27 00:53:46
+wAKBjrXfCkAhh-hHFQQk6Gi91O2pzT_W	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-29T07:04:57.335Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-29 13:04:58
+P_mM3LGDVGCXJK6puU44SjcPIuxIEJ5X	{"cookie":{"originalMaxAge":2591999998,"expires":"2021-08-26T18:54:42.303Z","httpOnly":true,"path":"/"},"passport":{}}	2021-08-27 00:54:43
 UhGobmBeeHp6y9HuDgvpCMIHVbwI8E-f	{"cookie":{"originalMaxAge":2591999991,"expires":"2021-07-28T12:35:27.186Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-28 18:35:28
 owEtU9PTKdJS9VUYDGER9uGjkadDCOsv	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-28T04:52:33.317Z","httpOnly":true,"path":"/"}}	2021-07-28 10:52:34
+nqsijOLt1jkg9S7EOCEq2EPFNvOKxd1I	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-30T09:45:40.824Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 15:45:41
+4hiAvlAJiM9ZKXMEcIorxuW6bgbV829V	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-30T09:45:52.753Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 15:45:53
+ufK_zxib8qvMM31irAG1kvDk_jkKudOg	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-29T19:13:30.863Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 01:13:31
 \.
 
 
@@ -485,10 +491,10 @@ COPY public.topics (id, name, description) FROM stdin;
 --
 
 COPY public.users (id, email, hash, name, affiliation, is_premium, salt, is_active, last_access) FROM stdin;
-3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-06-28 09:02:02.451316+06
-1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-06-28 18:25:43.059929+06
-4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	2021-06-28 18:24:21.587959+06
-2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-06-28 18:36:50.735423+06
+4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	2021-06-29 12:44:15.118168+06
+3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-07-28 00:38:39.595083+06
+2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-07-28 00:45:13.993892+06
+1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-07-28 00:44:40.357685+06
 \.
 
 
@@ -496,21 +502,21 @@ COPY public.users (id, email, hash, name, affiliation, is_premium, salt, is_acti
 -- Name: challenge_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenge_results_id_seq', 15, true);
+SELECT pg_catalog.setval('public.challenge_results_id_seq', 31, true);
 
 
 --
 -- Name: challenges_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenges_id_seq', 6, true);
+SELECT pg_catalog.setval('public.challenges_id_seq', 10, true);
 
 
 --
 -- Name: invitations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.invitations_id_seq', 5, true);
+SELECT pg_catalog.setval('public.invitations_id_seq', 15, true);
 
 
 --
