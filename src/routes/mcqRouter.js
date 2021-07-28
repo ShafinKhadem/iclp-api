@@ -36,6 +36,29 @@ async function getSuggestion(topicId) {
     }
 }
 
+async function getSuggestion2(examId) {
+    try {
+        const query = await pool.query(
+            'select challenge_id as "challengeId", difficulty, score, time from challenges inner join invitations on challenges.id = invitations.challenge_id where exam_id = $1',
+            [examId]
+        );
+        if (query.rowCount == 0) throw new Error("No mcq under this examId");
+        return query.rows[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
+mcqRouter.route("/find2/:examId").get(isAuth, async (req, res, next) => {
+    try {
+        console.log("---------------find2/" + req.params.examId);
+        obj = await getSuggestion2(req.params.examId);
+        res.status(200).json(obj);
+    } catch (error) {
+        next(error);
+    }
+});
+
 mcqRouter.route("/find/:topicId").get(isAuth, async (req, res, next) => {
     try {
         obj = await getSuggestion(req.params.topicId);
