@@ -24,6 +24,20 @@
     }
     ```
 
+-   `/mcq/find2/:examId`  
+    Gets the accociated mcq challenge related to this particular examId<br/>
+    Request body: _does not require_ <br/>
+    Response body:
+
+    ```javascript
+    {
+        "challengeId" : String,
+        "difficulty" : String,
+        "score" : Number,
+        "time" : Number
+    }
+    ```
+
 -   `/mcq/find/:topicID`  
     Randomly gets a mcq challenge under this topic.<br/>
     Request body: _does not require_ <br/>
