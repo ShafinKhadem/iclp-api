@@ -1,5 +1,36 @@
 # iclp-api
 
+### How to run
+
+-   setup database following [db/README.md](db/README.md)
+
+-   Make sure that node version is 14 (latest stable).
+
+-   Install all dependencies
+
+    ```
+    npm install
+    ```
+
+-   Run dev server
+
+    ```
+    npm run dev
+    ```
+
+### Documentations of some used npm packages
+
+-   [express-validator](https://express-validator.github.io/docs/index.html)
+-   [passport-local](https://www.passportjs.org/packages/passport-local/)
+-   [node-postgres](https://node-postgres.com/)
+-   [sql-template-strings](https://www.npmjs.com/package/sql-template-strings)
+-   [app-root-path](https://www.npmjs.com/package/app-root-path)
+-   [multer](https://www.npmjs.com/package/multer) for file upload
+
+### Install new npm package
+
+npm i --save whatever_package
+
 ### Endpoints:
 
 -   `/login`  
@@ -257,32 +288,3 @@
 
 
 -    _This will be updated along with implementation._
-
-### Project Info
-
--   Make sure that node version is 14 (latest stable).
-
--   Install all dependencies
-
-    ```
-    npm install
-    ```
-
--   Run dev server
-
-    ```
-    npm run dev
-    ```
-
-### Read documentations
-
--   [express-validator](https://express-validator.github.io/docs/index.html)
--   [passport-local](https://www.passportjs.org/packages/passport-local/)
--   [node-postgres](https://node-postgres.com/)
--   [sql-template-strings](https://www.npmjs.com/package/sql-template-strings)
--   [app-root-path](https://www.npmjs.com/package/app-root-path)
--   [multer](https://www.npmjs.com/package/multer) for file upload
-
-### Install new npm package
-
-npm i --save whatever_package

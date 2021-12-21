@@ -1,18 +1,54 @@
-# DB Info
+## How to set up database
 
-It may need to change something in database. If you change anything, please write it down in this file.
+-   Install PostgreSQL on your machine if it's not installed.
+-   After installing, by default it makes a new user on our machine named "postgres".
+-   User "postgres" is owner of PostgreSQL command line tool.
+-   If you want to use this cli, you have to switch to "postgres" user.
+-   Use `sudo -i -u postgres` (give password) to switch to "postgres" account.
+-   Now you can run `psql` and enter into PostgreSQL command line.
+-   In PostgreSQL command line, create a dedicated database for ICLP.
+-   Run `CREATE DATABASE iclp_db;`(don't miss the semicolon).
+-   It will create a database named "iclp_db". It's better to stick with this name. Otherwise, you will need to change environment variables in [.env](/../../.env) file.
+-   After creating the database quit from PostgreSQL command line by giving `\q` command.
+-   Now locate the dump file. Suppose, the dump file's absolute path is "infile.sql"
+-   Run `psql iclp_db < infile.sql`. (Details are [here](https://www.postgresql.org/docs/9.1/backup-dump.html))
+-   Now we have a ready database.
+-   Note that, this dump is different than our previous dump. Database is slightly changed. If you had an existing database, you can drop that.
 
-1. Changed all table's name to lowercase (it was actually necessary).
-2. Added a new table named session_store. It saves user sessions.
-3. Added a new column 'salt' in 'users' table.
-4. Password column was renamed to hash.
-5. Removed all tables irrelevant to our part.
-6. Added difficulty_type and challenge_type enum
-7. Added category, difficulty and score in challenges
-8. Added exam_id and details in challenge_results
-9. Added language enum
-10. Remove ranking from user
-11. Added time column in challenges table
-12. Added is_active, last_access column in users
-12. Added a new table named invitations. It saves play infos.
-13. Added dual_status enum
+
+
+## Alternative instructions
+
+### Make user=postgres password=postgres
+
+```
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+```
+
+### backup iclp_db
+
+```
+bash backup.sh
+```
+
+### restore iclp_db
+
+```
+bash restore.sh dump.sql
+```
+
+
+### If you mess up any sequence
+
+```
+alter sequence "Users_id_seq" restart with 101;
+```
+
+
+## ERD
+
+![Tentative ERD](ERD.png)
+
+### Note
+
+Although git keeps track of dump, I will upload new dumps in separate file with timestamps.
