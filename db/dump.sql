@@ -118,21 +118,6 @@ ALTER TABLE public.challenge_results_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE public.challenge_results_id_seq OWNED BY public.challenge_results.id;
 
-
---
--- Name: challenge_reviews; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.challenge_reviews (
-    user_id integer NOT NULL,
-    challenge_id integer NOT NULL,
-    rating integer,
-    review character varying(255)
-);
-
-
-ALTER TABLE public.challenge_reviews OWNER TO postgres;
-
 --
 -- Name: challenge_topics; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -219,7 +204,7 @@ ALTER TABLE public.invitations OWNER TO postgres;
 -- Name: TABLE invitations; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON TABLE public.invitations IS 'Table contains detaills of each dual exam invitation';
+COMMENT ON TABLE public.invitations IS 'Table contains details of each dual exam invitation';
 
 
 --
@@ -280,7 +265,6 @@ CREATE TABLE public.users (
     hash character varying(255),
     name character varying(255),
     affiliation character varying(255),
-    is_premium boolean DEFAULT false NOT NULL,
     salt character varying NOT NULL,
     is_active boolean DEFAULT false,
     last_access timestamp with time zone
@@ -393,14 +377,6 @@ COPY public.challenge_results (id, challenge_id, user_id, "time", score, exam_id
 
 
 --
--- Data for Name: challenge_reviews; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.challenge_reviews (user_id, challenge_id, rating, review) FROM stdin;
-\.
-
-
---
 -- Data for Name: challenge_topics; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -490,11 +466,11 @@ COPY public.topics (id, name, description) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, hash, name, affiliation, is_premium, salt, is_active, last_access) FROM stdin;
-4	1605042@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	nazrin shukti	\N	f	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	2021-06-29 12:44:15.118168+06
-3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	f	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-07-28 00:38:39.595083+06
-2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	f	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-07-28 00:45:13.993892+06
-1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	f	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-07-28 00:44:40.357685+06
+COPY public.users (id, email, hash, name, affiliation, salt, is_active, last_access) FROM stdin;
+4	1605058@ugrad.cse.buet.ac.bd	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO48ZFwTh4hz.zAMcQmbF7wR9yiG1TZSe	washief mugdho	\N	$2b$10$o1vd4Fy1XVVUgpsEUz8ktO	f	2021-06-29 12:44:15.118168+06
+3	1605047@ugrad.cse.buet.ac.bd	$2b$10$lu7MUJqdV6qlzhNY9vu5jOp17Cnr3FIM8V0XD6eFVHVAasz9Tri8W	ahsanul ameen	\N	$2b$10$lu7MUJqdV6qlzhNY9vu5jO	f	2021-07-28 00:38:39.595083+06
+2	1605045@ugrad.cse.buet.ac.bd	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO6crrZ7OKNNLEw60gSN3IIcObwLKozkq	shafin khadem	\N	$2b$10$bsY7qyyKOcPSc4M3Kf3KzO	f	2021-07-28 00:45:13.993892+06
+1	tomriddle@hogwarts.edu	$2b$10$6Xtxh8BfMaj4F/xyRL6dZeyq9VPgQF14rVnbktQyWgLT38AT3WetW	voldemort	admin	$2b$10$6Xtxh8BfMaj4F/xyRL6dZe	f	2021-07-28 00:44:40.357685+06
 \.
 
 
@@ -539,14 +515,6 @@ SELECT pg_catalog.setval('public.users_id_seq', 4, true);
 
 ALTER TABLE ONLY public.challenge_results
     ADD CONSTRAINT challenge_results_pkey PRIMARY KEY (id);
-
-
---
--- Name: challenge_reviews challenge_reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.challenge_reviews
-    ADD CONSTRAINT challenge_reviews_pkey PRIMARY KEY (user_id, challenge_id);
 
 
 --
@@ -641,22 +609,6 @@ ALTER TABLE ONLY public.challenge_results
 
 ALTER TABLE ONLY public.challenge_results
     ADD CONSTRAINT challenge_results_users_id_fk FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: challenge_reviews challenge_reviews_challenges_challenge_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.challenge_reviews
-    ADD CONSTRAINT challenge_reviews_challenges_challenge_id_fk FOREIGN KEY (challenge_id) REFERENCES public.challenges(id);
-
-
---
--- Name: challenge_reviews challenge_reviews_users_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.challenge_reviews
-    ADD CONSTRAINT challenge_reviews_users_user_id_fk FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
