@@ -37,7 +37,7 @@ app.use(
         }),
         secret: process.env.COOKIE_SECRET,
         resave: true,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
     })
 );
