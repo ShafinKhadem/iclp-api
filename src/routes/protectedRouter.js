@@ -15,9 +15,9 @@ const multer = require("multer");
 const upload = multer({ dest: appRoot + "/uploads" });
 
 const protectedRouter = express.Router({ mergeParams: true });
-protectedRouter.use(express.json());
+protectedRouter.use(express.json(), isAuth);
 
-protectedRouter.route("/").get(isAuth, (req, res, next) => {
+protectedRouter.route("/").get((req, res, next) => {
     res.status(200).json({ message: "into protected", user: req.user });
 });
 
@@ -120,7 +120,6 @@ async function judge(problemid, file) {
 protectedRouter.route("/submit").post(
     // NOTE: multer.single('f') discards all fields after f
     upload.single("submission"),
-    isAuth,
     async (req, res, next) => {
         const { params, query, body, user, file } = req;
         console.log(`submission received ${file.path}`);

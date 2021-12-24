@@ -8,7 +8,7 @@ const fs = require("fs");
 const multer = require("multer");
 
 const adminRouter = express.Router({ mergeParams: true });
-adminRouter.use(express.json());
+adminRouter.use(express.json(), isAdmin);
 
 const problemUpload = multer({
     storage: multer.diskStorage({
@@ -46,8 +46,6 @@ const problemUpload = multer({
 });
 
 adminRouter.route("/create-problem").post(
-    // NOTE: from now on, only admins can create problems
-    isAdmin,
     // NOTE: multer.single('f') discards all fields after f
     problemUpload.single("checker"),
     (req, res, next) => {
@@ -69,8 +67,6 @@ adminRouter.route("/create-problem").post(
 );
 
 adminRouter.route("/add-quiz").post(
-    // NOTE: from now on, only admins can add quizes
-    isAdmin,
     async (req, res, next) => {
         const body = req.body;
         const result = await dbQuery(
