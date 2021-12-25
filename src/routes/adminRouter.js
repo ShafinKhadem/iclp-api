@@ -83,9 +83,10 @@ adminRouter.route("/add-quiz").post(
                 res,
                 next,
                 SQL`
-            INSERT INTO challenge_topics (challenge_id, topic_id)
-            VALUES (${result[0].id}, ${body.topic})
-            `
+                INSERT INTO challenge_topics (challenge_id, topic_id)
+                VALUES (${result[0].id}, ${body.topic})
+                returning challenge_id id;
+                `
             );
         }
     }
