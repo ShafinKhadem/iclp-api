@@ -57,18 +57,6 @@ CREATE TYPE public.dual_status AS ENUM (
 
 ALTER TYPE public.dual_status OWNER TO postgres;
 
---
--- Name: language; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE public.language AS ENUM (
-    'c++ 17',
-    'python3'
-);
-
-
-ALTER TYPE public.language OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -79,8 +67,8 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.challenge_results (
     id integer NOT NULL,
-    challenge_id integer,
-    user_id integer,
+    challenge_id integer NOT NULL,
+    user_id integer NOT NULL,
     "time" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     score integer,
     exam_id integer,
@@ -226,8 +214,8 @@ ALTER TABLE public.session_store OWNER TO postgres;
 
 CREATE TABLE public.topics (
     id integer NOT NULL,
-    name character varying(255),
-    description character varying(255)
+    name character varying(127) NOT NULL,
+    description character varying(511)
 );
 
 
@@ -261,10 +249,10 @@ ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    email character varying(255) NOT NULL,
-    hash character varying(255),
-    name character varying(255),
-    affiliation character varying(255),
+    email character varying(127) NOT NULL,
+    hash character varying(127),
+    name character varying(127),
+    affiliation character varying(127),
     salt character varying NOT NULL,
     is_active boolean DEFAULT false,
     last_access timestamp with time zone
@@ -439,14 +427,6 @@ COPY public.invitations (exam_id, challenger_id, challengee_id, topic_id, status
 --
 
 COPY public.session_store (sid, sess, expire) FROM stdin;
-mT6W4nygZwN_D2kXUPCeRjmK3a5TuU--	{"cookie":{"originalMaxAge":2591999988,"expires":"2021-08-26T18:53:45.378Z","httpOnly":true,"path":"/"},"passport":{}}	2021-08-27 00:53:46
-wAKBjrXfCkAhh-hHFQQk6Gi91O2pzT_W	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-29T07:04:57.335Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-29 13:04:58
-P_mM3LGDVGCXJK6puU44SjcPIuxIEJ5X	{"cookie":{"originalMaxAge":2591999998,"expires":"2021-08-26T18:54:42.303Z","httpOnly":true,"path":"/"},"passport":{}}	2021-08-27 00:54:43
-UhGobmBeeHp6y9HuDgvpCMIHVbwI8E-f	{"cookie":{"originalMaxAge":2591999991,"expires":"2021-07-28T12:35:27.186Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-28 18:35:28
-owEtU9PTKdJS9VUYDGER9uGjkadDCOsv	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-28T04:52:33.317Z","httpOnly":true,"path":"/"}}	2021-07-28 10:52:34
-nqsijOLt1jkg9S7EOCEq2EPFNvOKxd1I	{"cookie":{"originalMaxAge":2592000000,"expires":"2021-07-30T09:45:40.824Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 15:45:41
-4hiAvlAJiM9ZKXMEcIorxuW6bgbV829V	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-30T09:45:52.753Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 15:45:53
-ufK_zxib8qvMM31irAG1kvDk_jkKudOg	{"cookie":{"originalMaxAge":2591999999,"expires":"2021-07-29T19:13:30.863Z","httpOnly":true,"path":"/"},"passport":{}}	2021-07-30 01:13:31
 \.
 
 
@@ -456,7 +436,7 @@ ufK_zxib8qvMM31irAG1kvDk_jkKudOg	{"cookie":{"originalMaxAge":2591999999,"expires
 
 COPY public.topics (id, name, description) FROM stdin;
 1	c++	c is the mother of all programming languages, c++ is object oriented extension of C.
-2	python	A very easy yet powerful language, its sysntax is the most beginner-friendly.
+2	python	A very easy yet powerful language, its syntax is the most beginner-friendly.
 3	java	A very powerful OOP language. The trick in java is, there are no tricks. It forces the code to be lengthy and structured.
 4	javascript	language of internet
 \.

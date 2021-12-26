@@ -11,7 +11,7 @@ function isAuth(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-    console.log("checking admin previledges...");
+    console.log("checking admin privileges...");
     if (req.isAuthenticated() && req.user.affiliation === "admin") {
         console.log(
             `admin access granted for ${req.user.name}(id:${req.user.id})`

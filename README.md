@@ -4,6 +4,8 @@
 
 -   setup database following [db/README.md](db/README.md)
 
+-   change .env to appropriate values.
+
 -   Make sure that node version is 14 (latest stable).
 
 -   Install all dependencies
@@ -27,9 +29,51 @@
 -   [app-root-path](https://www.npmjs.com/package/app-root-path)
 -   [multer](https://www.npmjs.com/package/multer) for file upload
 
-### Install new npm package
+### NOTES
 
-npm i --save whatever_package
+- Cross site cookie (third-party cookies) is problematic. I couldn't find any value of {sameSite, secure} for cookie configuration which works both in production (https) and development (http). That's why if you run `npm run start` or with `NODE_ENV=production` environment, authentication will fail after successful login.
+
+### heroku deployment
+
+- [x] add `"start": "NODE_ENV=production node src/index.js",` in scripts of package.json.
+
+- [x] Heroku assigns arbitrary port to each application which is saved in `PORT` environment variable, so use `process.env.PORT ||` before `process.env.API_PORT` in src/index.js
+
+- [x] Heroku assigns DATABASE_URL environment variable appropriately, also we need to allow unauthorized ssl. So add `connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false, }` to new Pool({...}) in src/config/pool/index.js
+
+- [x] Enable proxy by adding `app.set("trust proxy", 1);` in src/index.js
+
+- [x] Add FRONTEND_ROOT_URL in .env, add process.env.FRONTEND_ROOT_URL origin in corsOptions in src/index.js.
+
+- [x] Enable cross site https cookies by adding the following to app.use(Session({cookie:{...}}):
+
+```javascript
+sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+secure: process.env.NODE_ENV === "production", // must be explicitly specified if sameSite='none', denotes whether allow only https
+```
+
+- [x] Commit these changes.
+
+- [ ] Run the following only once.
+```bash
+APP_NAME=<HEROKU_APP_NAME>
+FRONTEND_ROOT_URL=<FRONTEND_ROOT_URL>
+heroku login
+heroku create $APP_NAME && heroku addons:create heroku-postgresql:hobby-dev
+heroku config:set -a $APP_NAME FRONTEND_ROOT_URL=$FRONTEND_ROOT_URL COOKIE_SECRET=$(openssl rand -base64 32) NODE_ENV=production
+```
+
+- [ ] run `git push heroku HEAD:main --force` to deploy
+
+- [ ] run the following everytime you wanna restore your DB from db/dump.sql.
+```bash
+APP_NAME=<HEROKU_APP_NAME>
+heroku pg:reset --confirm $APP_NAME
+DATABASE_URL=$(heroku config:get DATABASE_URL)
+psql -f db/dump.sql $DATABASE_URL && echo "restored $DATABASE_URL from db/dump.sql"
+```
+
+run `heroku ps:scale web=0` to shut down the heroku app, run `heroku ps:scale web=1` for starting again.
 
 ### Endpoints:
 
