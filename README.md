@@ -54,26 +54,36 @@ secure: process.env.NODE_ENV === "production", // must be explicitly specified i
 
 - [x] Commit these changes.
 
-- [ ] Run the following only once.
+- [ ] Run the following if you haven't before in your current desktop session.
 ```bash
-APP_NAME=<HEROKU_APP_NAME>
-FRONTEND_ROOT_URL=<FRONTEND_ROOT_URL>
 heroku login
-heroku create $APP_NAME && heroku addons:create heroku-postgresql:hobby-dev
-heroku config:set -a $APP_NAME FRONTEND_ROOT_URL=$FRONTEND_ROOT_URL COOKIE_SECRET=$(openssl rand -base64 32) NODE_ENV=production
+heroku container:login
 ```
 
-- [ ] run `git push heroku HEAD:main --force` to deploy
-
-- [ ] run the following everytime you wanna restore your DB from db/dump.sql.
+- [ ] Run the following only once.
 ```bash
-APP_NAME=<HEROKU_APP_NAME>
-heroku pg:reset --confirm $APP_NAME
-DATABASE_URL=$(heroku config:get DATABASE_URL)
+APP=<HEROKU_APP_NAME>
+FRONTEND_ROOT_URL=<FRONTEND_ROOT_URL>
+heroku create $APP && heroku addons:create heroku-postgresql:hobby-dev && git remote add heroku git@heroku.com:$APP.git
+heroku config:set -a $APP FRONTEND_ROOT_URL=$FRONTEND_ROOT_URL COOKIE_SECRET=$(openssl rand -base64 32) NODE_ENV=production
+```
+
+- [ ] Run the following everytime you wanna deploy
+```bash
+APP=<HEROKU_APP_NAME>
+heroku container:push -a $APP web
+heroku container:release -a $APP web
+```
+
+- [ ] Run the following everytime you wanna restore your DB from db/dump.sql.
+```bash
+APP=<HEROKU_APP_NAME>
+heroku pg:reset -a $APP -c $APP
+DATABASE_URL=$(heroku config:get -a $APP DATABASE_URL)
 psql -f db/dump.sql $DATABASE_URL && echo "restored $DATABASE_URL from db/dump.sql"
 ```
 
-run `heroku ps:scale web=0` to shut down the heroku app, run `heroku ps:scale web=1` for starting again.
+run `heroku ps:scale -a $APP web=0` to shut down the heroku app, run `heroku ps:scale -a $APP web=1` for starting again.
 
 ### Endpoints:
 
