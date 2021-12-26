@@ -8,8 +8,8 @@
 # 
 # If it does not show,
 # kill the process which is using port API_PORT-
-if [ -f .env ]; then export $(cat .env | xargs); fi
-tmp=($(lsof -i :$API_PORT))
+export $(cat .env | xargs)
+tmp=($(lsof -i:$API_PORT -sTCP:LISTEN))
 if [[ ${#tmp[@]} -gt 10 ]]; then
     pid=${tmp[10]};
     kill $pid;
