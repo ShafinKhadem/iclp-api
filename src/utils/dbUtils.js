@@ -1,15 +1,4 @@
-const { validationResult } = require("express-validator");
-const pool = require("./config/pool");
-
-function validate(req, next, errorMessage) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const err = new Error(errorMessage);
-        err.reasons = errors.errors.map((e) => e.msg);
-        err.statusCode = 400;
-        next(err);
-    }
-}
+const pool = require("../config/pool");
 
 async function dbQuery(sqlTemplateString) {
     try {
@@ -33,4 +22,4 @@ async function jsonDBQuery(res, next, sqlTemplateString) {
     }
 }
 
-module.exports = { validate, dbQuery, jsonDBQuery };
+module.exports = { dbQuery, jsonDBQuery };

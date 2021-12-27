@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../config/pool");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-const { validate } = require("../util");
+const { validate } = require("../utils/validate");
 
 const signUpRouter = express.Router();
 signUpRouter.use(express.json());

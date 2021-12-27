@@ -3,66 +3,34 @@ const express = require("express");
 const { isAdmin } = require("../middlewares/auth");
 const { body } = require("express-validator");
 const SQL = require("sql-template-strings");
-const { validate, dbQuery, jsonDBQuery } = require("../util");
-const fs = require("fs");
-const multer = require("multer");
+const { dbQuery, jsonDBQuery } = require("../utils/dbUtils");
 
 const adminRouter = express.Router({ mergeParams: true });
 adminRouter.use(express.json(), isAdmin);
 
-const problemUpload = multer({
-    storage: multer.diskStorage({
-        async destination(req, file, cb) {
-            const body = req.body;
-            console.log(body);
-            const result = await dbQuery(
-                SQL`
-                INSERT INTO public.challenges (id, title, content, category, difficulty, score)
-                VALUES (DEFAULT, ${body.title}, ${body.statement}, 'code', ${body.difficulty}, ${body.score})
-                returning id;
-                `
-            );
-            if (result instanceof Error) {
-            } else {
-                const dir = `${appRoot}/uploads/${result[0].id}`;
-                body.problemid = result[0].id;
-                console.log(dir);
-                fs.mkdirSync(dir, { recursive: true });
-                cb(null, dir);
-                const testDir = `${dir}/tests`;
-                fs.mkdirSync(testDir);
-                body.tests.split(",").forEach((test, index) => {
-                    fs.writeFile(`${testDir}/${index}`, test, function (err) {
-                        if (err) throw err;
-                        console.log(`Saved test ${index}`);
-                    });
-                });
-            }
-        },
-        filename(req, file, cb) {
-            cb(null, file.fieldname);
-        },
-    }),
-});
-
 adminRouter.route("/create-problem").post(
-    // NOTE: multer.single('f') discards all fields after f
-    problemUpload.single("checker"),
-    (req, res, next) => {
+    async (req, res, next) => {
         const body = req.body;
-        console.log(body.problemid);
-        console.log(req.file.filename);
-        // NOTE: upload automatically changes file permission, hence changing permission to suit our need:
-        fs.chmodSync(`${appRoot}/uploads/${body.problemid}/checker`, 0o775);
-        jsonDBQuery(
-            res,
-            next,
+        const result = await dbQuery(
             SQL`
-            INSERT INTO challenge_topics (challenge_id, topic_id)
-            VALUES (${body.problemid}, ${body.topicid})
-            returning challenge_id id;
+            INSERT INTO public.challenges (id, title, content, category, difficulty, score)
+            VALUES (DEFAULT, ${body.title}, ${body.content}, 'code', ${body.difficulty}, ${body.score})
+            returning id;
             `
         );
+        if (result instanceof Error) {
+            next(result);
+        } else {
+            jsonDBQuery(
+                res,
+                next,
+                SQL`
+                INSERT INTO challenge_topics (challenge_id, topic_id)
+                VALUES (${result[0].id}, ${body.topicid})
+                returning challenge_id id;
+                `
+            );
+        }
     }
 );
 
@@ -79,7 +47,7 @@ adminRouter.route("/add-quiz").post(
         if (result instanceof Error) {
             next(result);
         } else {
-            await jsonDBQuery(
+            jsonDBQuery(
                 res,
                 next,
                 SQL`

@@ -1,27 +1,12 @@
 const express = require("express");
 const pool = require("../config/pool");
 const { isAuth } = require("../middlewares/auth");
+const mcqQuizQuestions = require('../utils/mcqQuizQuestions');
+const mcqQuizStart = require("../utils/mcqQuizStart");
 
 const mcqRouter = express.Router({ mergeParams: true });
 
 mcqRouter.use(express.json());
-
-async function getQuestions(challengeId) {
-    try {
-        const query = await pool.query(
-            "select title, content, difficulty, score, time from challenges where id = $1 and category='mcq'",
-            [challengeId]
-        );
-        if (query.rowCount == 0)
-            throw new Error("No mcq with this challenge id");
-        content = JSON.parse(query.rows[0].content);
-        delete query.rows[0].content;
-        query.rows[0].questions = content.questions;
-        return query.rows[0];
-    } catch (error) {
-        throw error;
-    }
-}
 
 async function getSuggestion(topicId) {
     try {
@@ -70,15 +55,7 @@ mcqRouter.route("/find/:topicId").get(isAuth, async (req, res, next) => {
 
 mcqRouter.route("/start/:challengeId").post(isAuth, async (req, res, next) => {
     try {
-        questions = await getQuestions(req.params.challengeId);
-        questions.questions.forEach(function (part, index) {
-            this[index].answer = undefined;
-        }, questions.questions);
-        const query = await pool.query(
-            "insert into challenge_results (id, challenge_id, user_id, time, score, exam_id, details)values (DEFAULT, $1, $2, DEFAULT, -1, null, null) returning id",
-            [req.params.challengeId, req.user.id]
-        );
-        questions.resultId = query.rows[0].id;
+        const questions = await mcqQuizStart(req.params.challengeId, req.user.id);
         res.status(200).json(questions);
     } catch (error) {
         next(error);
@@ -99,7 +76,7 @@ mcqRouter.route("/submit/:resultId").post(isAuth, async (req, res, next) => {
             throw new Error("Different user submitting the answer");
         if (result_row.score !== -1)
             throw new Error("Already have submitted the answer");
-        questions = await getQuestions(result_row.challengeId);
+        questions = await mcqQuizQuestions(result_row.challengeId);
         let startTime = new Date(result_row.time);
         gap = (endTime - startTime) / 1000;
         if (gap > questions.time + 5)

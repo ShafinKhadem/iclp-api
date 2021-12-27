@@ -1,7 +1,6 @@
 const express = require("express");
-const { body } = require("express-validator");
 const SQL = require("sql-template-strings");
-const { validate, dbQuery, jsonDBQuery } = require("../util");
+const { dbQuery, jsonDBQuery } = require("../utils/dbUtils");
 
 const publicRouter = express.Router({ mergeParams: true });
 publicRouter.use(express.json());
@@ -71,7 +70,7 @@ publicRouter.route("/problem/:id").get(
 
         jsonDBQuery(res, next,
             SQL`
-            select *
+            select title, content->'statement' as statement, difficulty, score
             from challenges
             where id = ${params.id};
             `);

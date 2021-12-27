@@ -3,14 +3,14 @@ const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 const { isAuth } = require("../middlewares/auth");
 const SQL = require("sql-template-strings");
-const { dbQuery } = require("../util");
+const { dbQuery } = require("../utils/dbUtils");
 require("../config/passport");
 
 const loginRouter = express.Router({ mergeParams: true });
 
 loginRouter.use(express.json());
 
-    loginRouter.route("/")
+loginRouter.route("/")
     .post(
         body("email").isEmail().withMessage("Provided email is not valid"),
         passport.authenticate("local", { failureFlash: true }),
@@ -29,12 +29,12 @@ loginRouter.use(express.json());
         }
     );
 
-    // Now we add user login-time and active status
-    loginRouter.route("/")
+// Now we add user login-time and active status
+loginRouter.route("/")
     .all(isAuth, async (req, res, next) => {
         try {
             const uid = req.user.id;
-            console.log("-------------- user: ", uid , " just logged in");
+            console.log("-------------- user: ", uid, " just logged in");
             const result = await dbQuery(
                 SQL`
                     UPDATE users 
@@ -45,7 +45,7 @@ loginRouter.use(express.json());
             );
             if (result instanceof Error) {
                 next(result);
-            } 
+            }
         } catch (error) {
             next(error);
         }
