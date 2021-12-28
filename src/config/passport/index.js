@@ -19,6 +19,7 @@ const verifyCallback = async (username, password, done) => {
         if (hashedPassword !== hash) return done(null, false);
         return done(null, userObj);
     } catch (err) {
+        console.error(err.message);
         return done(null, false);
     }
 };

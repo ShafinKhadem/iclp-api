@@ -9,11 +9,11 @@ const logoutRouter = express.Router({ mergeParams: true });
 logoutRouter.use(express.json());
 
 logoutRouter.route("/").all((req, res, next) => {
-    res.clearCookie('connect.sid', constants.COOKIE_OPTIONS);
+    req.session = null;
     if (req.isAuthenticated()) next();
     else {
         // It's possible that cookie has been deleted / invalidated due to DB reset.
-        console.log('an unauthenticated user has (half) logged out by clearCookie');
+        console.log('an unauthenticated user has (half) logged out by clearing cookie-session');
         res.status(200).json({ message: "logged out smh" });
     }
 })

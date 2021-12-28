@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
--- Dumped by pg_dump version 13.3 (Ubuntu 13.3-0ubuntu0.21.04.1)
+-- Dumped from database version 13.5 (Ubuntu 13.5-0ubuntu0.21.04.1)
+-- Dumped by pg_dump version 13.5 (Ubuntu 13.5-0ubuntu0.21.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -106,6 +106,7 @@ ALTER TABLE public.challenge_results_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE public.challenge_results_id_seq OWNED BY public.challenge_results.id;
 
+
 --
 -- Name: challenge_topics; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -194,19 +195,6 @@ ALTER TABLE public.invitations OWNER TO postgres;
 
 COMMENT ON TABLE public.invitations IS 'Table contains details of each dual exam invitation';
 
-
---
--- Name: session_store; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.session_store (
-    sid character varying NOT NULL,
-    sess json NOT NULL,
-    expire timestamp(6) without time zone NOT NULL
-);
-
-
-ALTER TABLE public.session_store OWNER TO postgres;
 
 --
 -- Name: topics; Type: TABLE; Schema: public; Owner: postgres
@@ -423,14 +411,6 @@ COPY public.invitations (exam_id, challenger_id, challengee_id, topic_id, status
 
 
 --
--- Data for Name: session_store; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.session_store (sid, sess, expire) FROM stdin;
-\.
-
-
---
 -- Data for Name: topics; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -522,14 +502,6 @@ ALTER TABLE ONLY public.invitations
 
 
 --
--- Name: session_store session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session_store
-    ADD CONSTRAINT session_pkey PRIMARY KEY (sid);
-
-
---
 -- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -543,13 +515,6 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: IDX_session_expire; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX "IDX_session_expire" ON public.session_store USING btree (expire);
 
 
 --

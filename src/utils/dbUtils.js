@@ -6,7 +6,7 @@ async function dbQuery(sqlTemplateString) {
         return result.rows;
     } catch (e) {
         // log the actual error message only in server side.
-        console.log(e.message);
+        console.error(e.message);
         const err = new Error("operation failed");
         err.reasons = ["database error"];
         return err;

@@ -2,9 +2,7 @@ require("dotenv").config();
 require("util").inspect.defaultOptions.depth = null;
 const express = require("express");
 const morgan = require("morgan");
-const session = require("express-session");
-const pgSession = require("connect-pg-simple")(session);
-const pool = require("./config/pool");
+const session = require("cookie-session");
 const passport = require("passport");
 const loginRouter = require("./routes/loginRouter");
 const signUpRouter = require("./routes/signUpRouter");
@@ -33,14 +31,8 @@ app.use(express.json());
 app.set('trust proxy', 1);
 app.use(
     session({
-        store: new pgSession({
-            pool: pool,
-            tableName: "session_store",
-        }),
         secret: process.env.COOKIE_SECRET,
-        resave: true,
-        saveUninitialized: false,
-        cookie: constants.COOKIE_OPTIONS
+        ...constants.COOKIE_OPTIONS
     })
 );
 
