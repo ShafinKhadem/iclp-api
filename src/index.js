@@ -14,6 +14,7 @@ const publicRouter = require("./routes/publicRouter");
 const adminRouter = require("./routes/adminRouter");
 const mcqRouter = require("./routes/mcqRouter");
 const dualRouter = require("./routes/dualRouter");
+const constants = require('./utils/constants');
 var cors = require("cors");
 
 const PORT = process.env.PORT || process.env.API_PORT || 5000;
@@ -39,11 +40,7 @@ app.use(
         secret: process.env.COOKIE_SECRET,
         resave: true,
         saveUninitialized: false,
-        cookie: {
-            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-            secure: process.env.NODE_ENV === "production", // must be explicitly specified if sameSite='none'
-            maxAge: 30 * 24 * 60 * 60 * 1000
-        },
+        cookie: constants.COOKIE_OPTIONS
     })
 );
 

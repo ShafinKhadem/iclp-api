@@ -45,7 +45,7 @@
 
 - [x] Add FRONTEND_ROOT_URL in .env, add process.env.FRONTEND_ROOT_URL origin in corsOptions in src/index.js.
 
-- [x] Enable cross site https cookies by adding the following to app.use(Session({cookie:{...}}):
+- [x] Enable cross site https cookies by adding the following to COOKIE_OPTIONS in src/utils/constants.js:
 
 ```javascript
 sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery

@@ -2,10 +2,21 @@ const express = require("express");
 const { isAuth } = require("../middlewares/auth");
 const SQL = require("sql-template-strings");
 const { dbQuery } = require("../utils/dbUtils");
+const constants = require('../utils/constants');
 
 const logoutRouter = express.Router({ mergeParams: true });
 
 logoutRouter.use(express.json());
+
+logoutRouter.route("/").all((req, res, next) => {
+    res.clearCookie('connect.sid', constants.COOKIE_OPTIONS);
+    if (req.isAuthenticated()) next();
+    else {
+        // It's possible that cookie has been deleted / invalidated due to DB reset.
+        console.log('an unauthenticated user has (half) logged out by clearCookie');
+        res.status(200).json({ message: "logged out smh" });
+    }
+})
 
 logoutRouter.route("/").get(isAuth, async (req, res, next) => {
     try {
