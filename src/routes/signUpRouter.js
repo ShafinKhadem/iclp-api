@@ -20,7 +20,7 @@ signUpRouter.route("/").post(
                 [email]
             );
             if (query.rowCount == 0) return true;
-            throw new Error("Email already exists");
+            next(new Error("Email already exists"));
         } catch (error) {
             throw error;
         }
@@ -30,7 +30,7 @@ signUpRouter.route("/").post(
         .withMessage("Password is not strong enough"),
     body("confirm_password").custom((confirm_password, { req }) => {
         if (confirm_password !== req.body.password) {
-            throw new Error("Confirmation password does not match");
+            next(new Error("Confirmation password does not match"));
         }
         return true;
     }),

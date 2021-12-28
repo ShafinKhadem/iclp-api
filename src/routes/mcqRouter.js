@@ -70,17 +70,17 @@ mcqRouter.route("/submit/:resultId").post(isAuth, async (req, res, next) => {
             [req.params.resultId]
         );
         if (result_row.rowCount == 0)
-            throw new Error("This exam has not initiated yet");
+            next(new Error("This exam has not initiated yet"));
         result_row = result_row.rows[0];
         if (req.user.id !== result_row.userId)
-            throw new Error("Different user submitting the answer");
+            next(new Error("Different user submitting the answer"));
         if (result_row.score !== -1)
-            throw new Error("Already have submitted the answer");
+            next(new Error("Already have submitted the answer"));
         questions = await mcqQuizQuestions(result_row.challengeId);
         let startTime = new Date(result_row.time);
         gap = (endTime - startTime) / 1000;
         if (gap > questions.time + 5)
-            throw new Error("Submission time is over");
+            next(new Error("Submission time is over"));
 
         let score = 0;
         for (
