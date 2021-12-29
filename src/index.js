@@ -45,6 +45,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// simulate delay:
+// app.use(async (req, res, next) => {
+//     await new Promise(resolve => setTimeout(resolve, 1000));
+//     next();
+// });
+
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/logout", logoutRouter);
