@@ -12,7 +12,7 @@ if (!fs.existsSync(tmpDir)) {
     fs.mkdirSync(tmpDir);
 }
 const multer = require("multer");
-const tmpDirMulter = multer({ dest: tmpDir });
+const tmpDirMulter = multer({ dest: tmpDir, limits: { fileSize: 100 * 1024 * 8 } });
 
 const protectedRouter = express.Router({ mergeParams: true });
 protectedRouter.use(express.json(), isAuth);
